@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optiver Prep — 7-Day Battle Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080808;
+  --surface: #101010;
+  --surface2: #161616;
+  --border: #1e1e1e;
+  --border2: #2a2a2a;
+  --text: #e8e4db;
+  --muted: #5a5650;
+  --red: #e03a2f;
+  --gold: #c9a84c;
+  --blue: #3d8eff;
+  --green: #2ec27e;
+  --purple: #9d6eff;
+  --r: 6px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; font-size: 14px; line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
+body::after { content:''; position:fixed; inset:0; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events:none; z-index:9999; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+@keyframes spin { to { stroke-dashoffset: 0; } }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.75)} }
+@keyframes slideIn { from{opacity:0;transform:translateX(-8px)} to{opacity:1;transform:none} }
+
+/* ── TYPOGRAPHY ── */
+.f-mono { font-family: 'DM Mono', monospace; }
+.f-serif { font-family: 'Fraunces', serif; }
+.label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); }
+h1 { font-family:'Fraunces',serif; font-size:clamp(2.2rem,5vw,3.8rem); font-weight:700; line-height:1.05; letter-spacing:-.02em; }
+h2 { font-family:'Fraunces',serif; font-size:1.7rem; font-weight:700; line-height:1.1; }
+h3 { font-family:'Syne',sans-serif; font-size:.85rem; font-weight:600; }
+
+/* ── UTILS ── */
+.animate-in { animation: fadeUp .4s ease both; }
+
+/* ══════════════════════════════════════════════
+   HOME PAGE
+══════════════════════════════════════════════ */
+#home-view { min-height:100vh; }
+
+.home-header {
+  padding: 52px 60px 44px;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 32px;
+}
+.brand { display:flex; align-items:center; gap:10px; margin-bottom:20px; }
+.brand-dot { width:8px; height:8px; border-radius:50%; background:var(--red); animation:pulse 2.4s infinite; }
+.brand-name { font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); letter-spacing:.2em; text-transform:uppercase; }
+h1 em { color:var(--red); font-style:italic; }
+.header-timer { text-align:right; }
+.big-num { font-family:'Fraunces',serif; font-size:5.5rem; font-weight:300; color:var(--gold); line-height:1; }
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  border-bottom: 1px solid var(--border);
+}
+.pillar {
+  padding: 28px 32px;
+  border-right: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.pillar:last-child { border-right:0; }
+.pillar::before { content:''; position:absolute; top:0;left:0;right:0; height:2px; }
+.pillar.p1::before { background:var(--blue); }
+.pillar.p2::before { background:var(--gold); }
+.pillar.p3::before { background:var(--red); }
+.pillar-title { font-weight:600; font-size:.9rem; margin:10px 0 6px; }
+.pillar-desc { font-size:12px; color:#888; line-height:1.5; }
+
+/* Days grid */
+.days-section { padding: 48px 60px; }
+.section-head { display:flex; align-items:center; gap:20px; margin-bottom:32px; }
+.section-head h2 { font-size:1rem; font-weight:400; color:var(--muted); font-family:'Fraunces',serif; font-style:italic; }
+.section-head::after { content:''; flex:1; height:1px; background:var(--border); }
+
+.days-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:10px; }
+
+.day-card {
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  background: var(--surface);
+  cursor: pointer;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+  overflow: hidden;
+  animation: fadeUp .4s ease both;
+}
+.day-card:hover { border-color: #3a3a3a; transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,.5); }
+.day-card.is-interview { border-color: var(--red) !important; box-shadow:0 0 30px rgba(224,58,47,.1); }
+
+.dc-head { padding:14px 14px 10px; background:#0d0d0d; border-bottom:1px solid var(--border); }
+.dc-num { font-family:'Fraunces',serif; font-size:2.2rem; font-weight:700; line-height:1; }
+.is-interview .dc-num { color:var(--red); }
+.dc-day { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); margin-top:2px; }
+.dc-theme { padding:10px 14px 8px; font-family:'Fraunces',serif; font-style:italic; font-size:12px; color:var(--gold); border-bottom:1px solid var(--border); }
+.dc-tasks { list-style:none; padding:10px 14px 14px; }
+.dc-tasks li { font-size:11px; color:#888; padding:4px 0; border-bottom:1px solid #111; display:flex; gap:7px; align-items:flex-start; line-height:1.4; }
+.dc-tasks li::before { content:'→'; font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); flex-shrink:0; margin-top:1px; }
+.is-interview .dc-tasks li::before { content:'★'; color:var(--red); }
+.dc-tasks li:last-child { border-bottom:none; }
+.dc-badge { display:inline-block; font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); background:#111; border:1px solid var(--border); border-radius:3px; padding:2px 6px; margin-top:6px; }
+
+/* Progress dots on cards */
+.dc-progress { padding:8px 14px; display:flex; gap:4px; align-items:center; }
+.dp-dot { width:6px; height:6px; border-radius:50%; background:var(--border2); transition:background .3s; }
+.dp-dot.done { background:var(--green); }
+
+/* Home answers strip */
+.home-answers { padding:0 60px 60px; }
+.answer-strip { border:1px solid var(--border); border-radius:var(--r); overflow:hidden; }
+.ans-row { border-bottom:1px solid var(--border); }
+.ans-row:last-child { border-bottom:none; }
+.ans-q { padding:15px 22px; display:flex; align-items:flex-start; gap:16px; cursor:pointer; }
+.ans-q:hover { background:var(--surface2); }
+.ans-qnum { font-family:'Fraunces',serif; font-size:1.1rem; color:var(--muted); font-weight:700; width:28px; flex-shrink:0; }
+.ans-qtext { font-size:13px; flex:1; line-height:1.5; }
+.ans-toggle { font-size:18px; color:var(--muted); flex-shrink:0; font-family:'DM Mono',monospace; transition:transform .2s; }
+.ans-body { display:none; padding:0 22px 18px 66px; }
+.ans-body.open { display:block; animation:fadeUp .3s ease; }
+.ans-body p { font-size:13px; color:#aaa; line-height:1.7; margin-bottom:6px; }
+.formula { display:block; font-family:'DM Mono',monospace; background:var(--surface2); border:1px solid var(--border); border-radius:4px; padding:9px 13px; font-size:12px; color:var(--gold); margin:8px 0; white-space:pre-wrap; }
+.insight-box { background:rgba(201,168,76,.05); border-left:2px solid var(--gold); padding:10px 13px; font-size:12px; color:#999; border-radius:0 4px 4px 0; margin-top:10px; line-height:1.6; }
+
+/* ══════════════════════════════════════════════
+   DAY VIEW
+══════════════════════════════════════════════ */
+#day-view { display:none; min-height:100vh; }
+#day-view.active { display:block; animation:fadeUp .35s ease; }
+
+.dv-topbar {
+  position: sticky; top:0; z-index:100;
+  background: rgba(8,8,8,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 60px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 56px;
+}
+.back-btn {
+  display:flex; align-items:center; gap:8px;
+  font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.1em;
+  color:var(--muted); cursor:pointer; border:1px solid var(--border);
+  background:var(--surface); border-radius:4px; padding:6px 12px;
+  transition:all .2s; flex-shrink:0;
+}
+.back-btn:hover { color:var(--text); border-color:var(--border2); }
+.dv-topbar-title { font-family:'Fraunces',serif; font-style:italic; font-size:.95rem; color:var(--gold); }
+.dv-topbar-day { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:.15em; margin-left:auto; }
+
+/* Hero */
+.dv-hero {
+  padding: 48px 60px 40px;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 48px;
+  align-items: center;
+}
+.dv-hero-label { margin-bottom:10px; }
+.dv-hero h1 { font-size:clamp(2rem,4vw,3.2rem); }
+.dv-hero h1 em { color:var(--red); }
+
+/* Progress ring */
+.progress-ring-wrap { display:flex; flex-direction:column; align-items:center; gap:10px; }
+.ring-container { position:relative; width:120px; height:120px; }
+.ring-svg { transform:rotate(-90deg); }
+.ring-bg { fill:none; stroke:var(--border); stroke-width:8; }
+.ring-fill { fill:none; stroke:var(--green); stroke-width:8; stroke-linecap:round; transition:stroke-dashoffset .6s cubic-bezier(.4,0,.2,1); }
+.ring-center { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.ring-pct { font-family:'Fraunces',serif; font-size:1.8rem; font-weight:700; line-height:1; }
+.ring-label2 { font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); letter-spacing:.1em; margin-top:2px; }
+.ring-sublabel { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:.12em; }
+
+/* Stats row */
+.dv-stats {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  border-bottom: 1px solid var(--border);
+}
+.stat-box {
+  padding: 20px 28px;
+  border-right: 1px solid var(--border);
+}
+.stat-box:last-child { border-right:0; }
+.stat-num { font-family:'Fraunces',serif; font-size:2rem; font-weight:700; line-height:1; }
+.stat-num.c-tasks { color:var(--blue); }
+.stat-num.c-concepts { color:var(--purple); }
+.stat-num.c-practice { color:var(--gold); }
+.stat-num.c-tests { color:var(--red); }
+.stat-label { font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); letter-spacing:.15em; text-transform:uppercase; margin-top:4px; }
+.stat-sub { font-size:11px; color:#666; margin-top:2px; }
+
+/* Tab nav */
+.dv-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 16px 60px 0;
+  border-bottom: 1px solid var(--border);
+}
+.tab-btn {
+  padding: 10px 20px;
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+  cursor:pointer;
+  border-radius:4px 4px 0 0;
+  border:1px solid transparent;
+  border-bottom:none;
+  transition:all .2s;
+  position:relative;
+  bottom:-1px;
+}
+.tab-btn:hover { color:var(--text); }
+.tab-btn.active {
+  color:var(--text);
+  background:var(--bg);
+  border-color:var(--border);
+  border-bottom-color:var(--bg);
+}
+.tab-count {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:16px; height:16px; border-radius:50%;
+  background:var(--border2); font-size:8px;
+  margin-left:6px; font-family:'DM Mono',monospace;
+  transition:background .3s;
+}
+.tab-count.done-count { background:var(--green); color:#000; }
+
+/* Tab panels */
+.dv-content { padding: 40px 60px 80px; }
+.tab-panel { display:none; animation:fadeUp .3s ease; }
+.tab-panel.active { display:block; }
+
+/* ── CHECKLIST ── */
+.checklist { display:flex; flex-direction:column; gap:10px; }
+.check-item {
+  display:flex; align-items:flex-start; gap:16px;
+  padding:18px 20px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  cursor:pointer;
+  transition:all .2s;
+}
+.check-item:hover { border-color:var(--border2); }
+.check-item.checked { opacity:.55; }
+.check-item.checked .ci-text { text-decoration:line-through; color:var(--muted); }
+.check-box {
+  width:20px; height:20px; border-radius:4px; border:1px solid var(--border2);
+  flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  font-size:11px; transition:all .2s; margin-top:1px;
+}
+.check-item.checked .check-box { background:var(--green); border-color:var(--green); color:#000; }
+.ci-text { font-size:13.5px; line-height:1.5; }
+.ci-tag {
+  margin-left:auto; flex-shrink:0;
+  font-family:'DM Mono',monospace; font-size:9px; color:var(--muted);
+  background:var(--surface2); border:1px solid var(--border); border-radius:3px;
+  padding:3px 7px; letter-spacing:.08em; align-self:flex-start;
+}
+
+/* ── CONCEPTS ── */
+.concepts-list { display:flex; flex-direction:column; gap:12px; }
+.concept-card {
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  background:var(--surface);
+  overflow:hidden;
+}
+.concept-head {
+  padding:18px 22px;
+  display:flex; align-items:center; gap:16px;
+  cursor:pointer;
+}
+.concept-head:hover { background:var(--surface2); }
+.concept-icon { font-size:1.3rem; flex-shrink:0; }
+.concept-title { font-weight:600; font-size:.9rem; flex:1; }
+.concept-difficulty {
+  font-family:'DM Mono',monospace; font-size:9px;
+  padding:3px 8px; border-radius:3px; letter-spacing:.08em;
+  flex-shrink:0;
+}
+.diff-core { background:rgba(224,58,47,.12); color:var(--red); border:1px solid rgba(224,58,47,.2); }
+.diff-high { background:rgba(201,168,76,.1); color:var(--gold); border:1px solid rgba(201,168,76,.2); }
+.diff-med { background:rgba(61,142,255,.1); color:var(--blue); border:1px solid rgba(61,142,255,.2); }
+.concept-toggle { font-family:'DM Mono',monospace; font-size:18px; color:var(--muted); transition:transform .25s; }
+.concept-body { display:none; padding:0 22px 20px 22px; border-top:1px solid var(--border); }
+.concept-body.open { display:block; animation:fadeUp .25s ease; }
+.concept-body p { font-size:13px; color:#aaa; line-height:1.7; margin-bottom:8px; margin-top:14px; }
+.concept-body ul { list-style:none; display:flex; flex-direction:column; gap:4px; margin-top:6px; }
+.concept-body ul li { font-size:12.5px; color:#aaa; padding:3px 0 3px 12px; position:relative; }
+.concept-body ul li::before { content:'·'; position:absolute; left:0; color:var(--gold); }
+.concept-mastered { float:right; margin-top:14px; display:flex; align-items:center; gap:8px; }
+.master-btn {
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase;
+  padding:6px 14px; border-radius:4px; cursor:pointer; border:1px solid var(--border);
+  background:transparent; color:var(--muted); transition:all .2s;
+}
+.master-btn:hover { border-color:var(--green); color:var(--green); }
+.master-btn.mastered { background:rgba(46,194,126,.1); border-color:var(--green); color:var(--green); }
+
+/* ── PRACTICE PROBLEMS ── */
+.problems-list { display:flex; flex-direction:column; gap:16px; }
+.problem-card {
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  background:var(--surface);
+  overflow:hidden;
+}
+.prob-header { padding:20px 22px; display:flex; gap:16px; align-items:flex-start; }
+.prob-num { font-family:'Fraunces',serif; font-size:1.5rem; color:var(--border2); font-weight:700; line-height:1; width:30px; flex-shrink:0; }
+.prob-content { flex:1; }
+.prob-title { font-weight:600; font-size:.85rem; color:var(--gold); margin-bottom:6px; font-family:'DM Mono',monospace; letter-spacing:.08em; font-size:10px; }
+.prob-q { font-size:13.5px; line-height:1.6; }
+.prob-actions { display:flex; gap:8px; margin-top:14px; }
+.prob-btn {
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase;
+  padding:6px 12px; border-radius:4px; cursor:pointer; border:1px solid var(--border);
+  background:var(--surface2); color:var(--muted); transition:all .2s;
+}
+.prob-btn.hint-btn:hover { border-color:var(--blue); color:var(--blue); }
+.prob-btn.sol-btn:hover { border-color:var(--gold); color:var(--gold); }
+.prob-btn.solved-btn { border-color:var(--green); color:var(--green); background:rgba(46,194,126,.08); }
+.prob-hint, .prob-solution { display:none; }
+.prob-hint.show, .prob-solution.show { display:block; animation:fadeUp .25s ease; }
+.prob-hint { padding:0 22px 0 68px; }
+.prob-hint-inner { border-left:2px solid var(--blue); padding:10px 14px; background:rgba(61,142,255,.04); border-radius:0 4px 4px 0; margin-bottom:14px; font-size:12.5px; color:#aaa; line-height:1.6; }
+.prob-solution { padding:0 22px 20px 68px; border-top:1px solid var(--border); }
+.prob-solution p { font-size:13px; color:#aaa; line-height:1.7; margin-top:12px; }
+.prob-solved-check { margin-left:auto; flex-shrink:0; }
+
+/* ── TEST QUESTIONS ── */
+.test-intro {
+  background:rgba(224,58,47,.04);
+  border:1px solid rgba(224,58,47,.15);
+  border-radius:var(--r);
+  padding:20px 24px;
+  margin-bottom:24px;
+  display:flex; gap:16px; align-items:center;
+}
+.test-intro-icon { font-size:1.6rem; flex-shrink:0; }
+.test-intro-text h3 { font-size:.9rem; margin-bottom:4px; }
+.test-intro-text p { font-size:12px; color:#888; line-height:1.5; }
+.test-list { display:flex; flex-direction:column; gap:16px; }
+.test-card {
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  background:var(--surface);
+  overflow:hidden;
+  position:relative;
+}
+.test-card::before { content:''; position:absolute; top:0;left:0; width:3px; height:100%; }
+.test-card.diff-hard::before { background:var(--red); }
+.test-card.diff-extreme::before { background:linear-gradient(to bottom, var(--red), var(--purple)); }
+.test-head { padding:20px 22px 20px 28px; display:flex; align-items:flex-start; gap:16px; }
+.test-tag {
+  font-family:'DM Mono',monospace; font-size:9px; padding:3px 8px; border-radius:3px;
+  letter-spacing:.1em; flex-shrink:0; margin-top:2px;
+}
+.tt-hard { background:rgba(224,58,47,.12); color:var(--red); border:1px solid rgba(224,58,47,.2); }
+.tt-extreme { background:rgba(157,110,255,.12); color:var(--purple); border:1px solid rgba(157,110,255,.2); }
+.test-q-content { flex:1; }
+.test-q-label { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:.1em; margin-bottom:6px; }
+.test-q-text { font-size:13.5px; line-height:1.65; }
+.test-actions { padding:0 22px 16px 28px; display:flex; gap:10px; align-items:center; }
+.reveal-btn {
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase;
+  padding:7px 14px; border-radius:4px; cursor:pointer;
+  background:rgba(224,58,47,.08); border:1px solid rgba(224,58,47,.2);
+  color:var(--red); transition:all .2s;
+}
+.reveal-btn:hover { background:rgba(224,58,47,.15); }
+.correct-btn {
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase;
+  padding:7px 14px; border-radius:4px; cursor:pointer;
+  background:transparent; border:1px solid var(--border);
+  color:var(--muted); transition:all .2s;
+}
+.correct-btn:hover { border-color:var(--green); color:var(--green); }
+.correct-btn.got-it { background:rgba(46,194,126,.08); border-color:var(--green); color:var(--green); }
+.test-solution { display:none; padding:0 22px 20px 28px; border-top:1px solid var(--border); }
+.test-solution.open { display:block; animation:fadeUp .25s ease; }
+.test-solution p { font-size:13px; color:#aaa; line-height:1.7; margin-top:12px; }
+.test-solution .key-insight { background:rgba(157,110,255,.05); border-left:2px solid var(--purple); padding:10px 14px; font-size:12px; color:#aaa; border-radius:0 4px 4px 0; margin-top:12px; line-height:1.6; }
+
+/* ── ANALYTICS PANEL ── */
+.analytics-wrap { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+.analytics-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--r); padding:24px; }
+.analytics-card h3 { margin-bottom:16px; font-size:.8rem; letter-spacing:.1em; }
+.bar-chart { display:flex; flex-direction:column; gap:10px; }
+.bar-row { display:flex; align-items:center; gap:12px; }
+.bar-label { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); width:70px; flex-shrink:0; }
+.bar-track { flex:1; height:8px; background:var(--border); border-radius:4px; overflow:hidden; }
+.bar-fill { height:100%; border-radius:4px; transition:width .6s cubic-bezier(.4,0,.2,1); }
+.bar-val { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); width:30px; text-align:right; flex-shrink:0; }
+
+.session-log { display:flex; flex-direction:column; gap:6px; }
+.log-entry { display:flex; align-items:center; gap:10px; padding:8px 12px; background:var(--surface2); border-radius:4px; }
+.log-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+.log-text { font-size:12px; color:#888; flex:1; }
+.log-time { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); }
+
+/* Responsive */
+@media(max-width:900px) {
+  .home-header, .days-section, .home-answers, .dv-topbar, .dv-hero, .dv-content { padding-left:20px; padding-right:20px; }
+  .days-grid { grid-template-columns:repeat(4,1fr); }
+  .pillars { grid-template-columns:1fr; }
+  .dv-hero { grid-template-columns:1fr; }
+  .dv-stats { grid-template-columns:repeat(2,1fr); }
+  .analytics-wrap { grid-template-columns:1fr; }
+  .dv-tabs { padding-left:20px; padding-right:20px; overflow-x:auto; }
+  .header-timer { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HOME VIEW ══════════ -->
+<div id="home-view">
+  <header class="home-header">
+    <div>
+      <div class="brand">
+        <div class="brand-dot"></div>
+        <span class="brand-name">Optiver Final Round · 2026</span>
+      </div>
+      <h1>Your 7-Day Path<br>to <em>Invincible</em></h1>
+    </div>
+    <div class="header-timer">
+      <div class="big-num">7</div>
+      <div class="label" style="margin-top:4px">days to interview</div>
+    </div>
+  </header>
+
+  <div class="pillars">
+    <div class="pillar p1">
+      <div class="label">Pillar I</div>
+      <div class="pillar-title">🎲 Probability & Combinatorics</div>
+      <div class="pillar-desc">Expected values, Bayes, distributions, combinatorial counting. Optiver's core assessment.</div>
+    </div>
+    <div class="pillar p2">
+      <div class="label">Pillar II</div>
+      <div class="pillar-title">📈 Market Making & Estimation</div>
+      <div class="pillar-desc">Fermi estimation, bid/offer intuition, sizing uncertainty. The trading mindset.</div>
+    </div>
+    <div class="pillar p3">
+      <div class="label">Pillar III</div>
+      <div class="pillar-title">⚡ Mental Maths & Decision Making</div>
+      <div class="pillar-desc">Speed arithmetic, EV reasoning, risk/reward tradeoffs under pressure.</div>
+    </div>
+  </div>
+
+  <div class="days-section">
+    <div class="section-head">
+      <h2>Click a day to begin</h2>
+    </div>
+    <div class="days-grid" id="days-grid"></div>
+  </div>
+
+  <div class="home-answers">
+    <div class="section-head" style="margin-bottom:20px">
+      <h2>Optiver Doc — Quick Reference Solutions</h2>
+    </div>
+    <div class="answer-strip" id="home-answers-strip"></div>
+  </div>
+</div>
+
+<!-- ══════════ DAY VIEW ══════════ -->
+<div id="day-view">
+  <div class="dv-topbar">
+    <div class="back-btn" onclick="goHome()">← Back</div>
+    <div class="dv-topbar-title" id="dv-title-bar">Day 1 — Probability Fundamentals</div>
+    <div class="dv-topbar-day" id="dv-day-label">MON</div>
+  </div>
+
+  <div class="dv-hero">
+    <div>
+      <div class="dv-hero-label label" id="dv-label">Day 1 of 7</div>
+      <h1 id="dv-heading">Probability<br><em>Fundamentals</em></h1>
+      <p style="color:#888; font-size:13px; margin-top:14px; max-width:420px;" id="dv-subtitle">Geometric distributions, combinatorics, conditional probability. Build the bedrock everything else sits on.</p>
+    </div>
+    <div class="progress-ring-wrap">
+      <div class="ring-container">
+        <svg class="ring-svg" width="120" height="120" viewBox="0 0 120 120">
+          <circle class="ring-bg" cx="60" cy="60" r="50"/>
+          <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="50"
+            stroke-dasharray="314.16" stroke-dashoffset="314.16"/>
+        </svg>
+        <div class="ring-center">
+          <div class="ring-pct" id="ring-pct">0%</div>
+          <div class="ring-label2">complete</div>
+        </div>
+      </div>
+      <div class="ring-sublabel">Today's Progress</div>
+    </div>
+  </div>
+
+  <div class="dv-stats">
+    <div class="stat-box">
+      <div class="stat-num c-tasks" id="stat-tasks">0/5</div>
+      <div class="stat-label">Tasks Done</div>
+      <div class="stat-sub">Daily checklist</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num c-concepts" id="stat-concepts">0/4</div>
+      <div class="stat-label">Concepts Mastered</div>
+      <div class="stat-sub">Mark when understood</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num c-practice" id="stat-practice">0/3</div>
+      <div class="stat-label">Problems Solved</div>
+      <div class="stat-sub">Practice problems</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num c-tests" id="stat-tests">0/3</div>
+      <div class="stat-label">Tests Passed</div>
+      <div class="stat-sub">Hard questions</div>
+    </div>
+  </div>
+
+  <div class="dv-tabs" id="dv-tabs">
+    <div class="tab-btn active" data-tab="checklist" onclick="switchTab('checklist',this)">
+      Checklist <span class="tab-count" id="tc-checklist">0</span>
+    </div>
+    <div class="tab-btn" data-tab="concepts" onclick="switchTab('concepts',this)">
+      Concepts <span class="tab-count" id="tc-concepts">0</span>
+    </div>
+    <div class="tab-btn" data-tab="practice" onclick="switchTab('practice',this)">
+      Practice <span class="tab-count" id="tc-practice">0</span>
+    </div>
+    <div class="tab-btn" data-tab="test" onclick="switchTab('test',this)">
+      🔥 Boss Questions <span class="tab-count" id="tc-test">0</span>
+    </div>
+    <div class="tab-btn" data-tab="analytics" onclick="switchTab('analytics',this)">
+      Analytics
+    </div>
+  </div>
+
+  <div class="dv-content">
+    <div class="tab-panel active" id="panel-checklist"></div>
+    <div class="tab-panel" id="panel-concepts"></div>
+    <div class="tab-panel" id="panel-practice"></div>
+    <div class="tab-panel" id="panel-test"></div>
+    <div class="tab-panel" id="panel-analytics"></div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════ */
+const DAYS = [
+{
+  num:1, name:'Mon', theme:'Probability Fundamentals',
+  color:'var(--blue)',
+  subtitle:'Geometric distributions, combinatorics, conditional probability. Build the bedrock everything else sits on.',
+  tasks:[
+    { text:'Solve Exercises 1, 2 & 3 from the Optiver doc — write out full solutions', tag:'~45 min' },
+    { text:'Geometric distribution deep-dive: derive E[X]=1/p, Var[X]=(1-p)/p² from scratch', tag:'~30 min' },
+    { text:'Binomial distribution: understand parameters, PMF, E[X]=np, Var[X]=np(1-p)', tag:'~30 min' },
+    { text:'Combinations & permutations drill: 20 card-based problems timed at 2 min each', tag:'~40 min' },
+    { text:'30-minute Zetamac mental arithmetic warm-up (aim: 40+ correct in 90 seconds)', tag:'~30 min' },
+    { text:'Review: conditional probability, Bayes\' theorem — write out the formula and one example', tag:'~20 min' }
+  ],
+  concepts:[
+    { icon:'📐', title:'Geometric Distribution', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>When you repeat independent Bernoulli trials (each with success probability <em>p</em>) until you get the first success, the number of trials follows a geometric distribution.</p>
+      <ul><li>P(X = k) = (1−p)^(k−1) × p for k = 1, 2, 3, ...</li><li>E[X] = 1/p</li><li>Var[X] = (1−p)/p²</li><li>Memoryless property: P(X > m+n | X > m) = P(X > n)</li></ul>
+      <p>For a fair die, P(rolling a 3) = 1/6, so E[rolls to get a 3] = 6. Memorise this cold.</p>` },
+    { icon:'🃏', title:'Combinations & Permutations', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>Fundamental counting tools for any card, ball, or arrangement problem.</p>
+      <ul><li>Permutations (order matters): P(n,r) = n! / (n−r)!</li><li>Combinations (order doesn't matter): C(n,r) = n! / [r!(n−r)!]</li><li>For 52-card deck: C(52,4) = 270,725 ways to draw 4 cards</li></ul>
+      <p>Key identity: C(n,r) = C(n, n−r). Think about whether order matters — if you're asked for a hand of cards, use combinations.</p>` },
+    { icon:'🔀', title:'Conditional Probability & Bayes\'', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>Conditional probability: P(A|B) = P(A∩B) / P(B). Read as "probability of A given B occurred."</p>
+      <ul><li>Bayes' Theorem: P(A|B) = P(B|A)×P(A) / P(B)</li><li>Law of Total Probability: P(B) = ΣP(B|Aᵢ)×P(Aᵢ) for partition {Aᵢ}</li><li>Always draw a tree diagram or table for Bayes problems under pressure</li></ul>
+      <p>Common trap: confusing P(A|B) with P(B|A). They are not the same (prosecutor's fallacy).</p>` },
+    { icon:'📊', title:'Binomial Distribution', diff:'diff-high', diffLabel:'HIGH',
+      body:`<p>Count the number of successes in n independent Bernoulli(p) trials.</p>
+      <ul><li>P(X=k) = C(n,k) × p^k × (1−p)^(n−k)</li><li>E[X] = np, Var[X] = np(1−p)</li><li>Normal approximation valid when np>5 and n(1−p)>5</li></ul>
+      <p>Exercise 3 (drawing 52 cards with replacement, no Kings) is NOT binomial — it asks for all 52 draws failing, which is simply (48/52)^52.</p>` }
+  ],
+  practice:[
+    { source:'Optiver Ex.1', title:'One of Each Suit',
+      q:'You randomly draw 4 cards without replacement from a standard 52-card deck. What is the probability you get exactly one of each suit (♣, ♦, ♠, ♥)?',
+      hint:'Count the favourable outcomes: how many ways can you pick one card from each of the 4 suits? Divide by total ways to pick 4 cards from 52.',
+      solution:`<p>Favourable: choose 1 card from each of 4 suits = 13⁴ = 28,561 ordered ways. But we need to account for all orderings, so multiply by 4! = 24.</p>
+      <span class="formula">P = (13⁴ × 4!) / (52 × 51 × 50 × 49)</span>
+      <span class="formula">= 28561 × 24 / 6,497,400 = 685,464 / 6,497,400 ≈ 0.1055</span>
+      <p>Equivalently: C(13,1)⁴ / C(52,4) × (number of suit arrangements... this gives the same 10.55%. Intuition: about 1 in 10 chance.</p>
+      <div class="insight-box">Always sanity-check against intuition. With 4 suits and 4 cards, ≈10% feels about right — not too high (many ways to fail) not too low (13 cards per suit, plenty of options).</div>` },
+    { source:'Optiver Ex.2', title:'Expected Dice Rolls',
+      q:'How many times do you expect to roll a die for it to land on a 3?',
+      hint:'What distribution governs "number of trials until first success"? What is p here?',
+      solution:`<p>This is a geometric distribution with p = 1/6 (probability of rolling a 3).</p>
+      <span class="formula">E[X] = 1/p = 1/(1/6) = 6</span>
+      <p>Derivation: E[X] = 1×(1/6) + 2×(5/6)(1/6) + 3×(5/6)²(1/6) + ... = Σk×(5/6)^(k-1)×(1/6) = 1/(1/6) = 6.</p>
+      <div class="insight-box">Memorise: E[geometric] = 1/p. It comes up in virtually every quant interview. The derivation using telescoping or PGFs is worth knowing too.</div>` },
+    { source:'Optiver Ex.3', title:'No Kings in 52 Draws',
+      q:'You draw from a standard deck 52 times, replacing and shuffling each time. What\'s the probability you never draw a King?',
+      hint:'Each draw is independent. P(not a King) on one draw = 48/52. Multiply across all 52 draws.',
+      solution:`<p>Since each draw is independent (with replacement), draws multiply:</p>
+      <span class="formula">P(no King in 52 draws) = (48/52)^52 = (12/13)^52</span>
+      <span class="formula">≈ e^(52 × ln(12/13)) ≈ e^(52 × −0.0800) ≈ e^(−4.154) ≈ 0.0157</span>
+      <p>About 1.57%. Use the approximation (1 − 1/n)^n → 1/e ≈ 0.368. Here n=13, exponent = 4n, so ≈ (1/e)^4 ≈ 1.83%. Close enough for a mental estimate.</p>
+      <div class="insight-box">This is essentially asking: what's the probability all 52 draws avoid a specific 1/13 category? The answer plummets fast as draws increase.</div>` }
+  ],
+  tests:[
+    { label:'HARD', cls:'diff-hard', tag:'tt-hard', category:'Conditional Probability',
+      q:'You deal cards one at a time from a shuffled standard deck. What is the probability the first Ace appears before the first King?',
+      solution:`<p>Consider only the relative ordering of the 8 special cards (4 Aces + 4 Kings). By symmetry, each of these 8 cards is equally likely to be the first among them to appear in the deck.</p>
+      <span class="formula">P(Ace appears first among the 8) = 4/8 = 1/2</span>
+      <p>This elegant symmetry argument avoids any messy enumeration. The other 44 cards are irrelevant — they just "fill gaps" between the special cards without affecting their relative order.</p>
+      <div class="key-insight">🔑 Key insight: When dealing with "first of type X vs first of type Y," consider only the relative ordering of those special elements. Symmetry gives the answer immediately.</div>` },
+    { label:'HARD', cls:'diff-hard', tag:'tt-hard', category:'Markov Chain / EV',
+      q:'A fair coin is flipped repeatedly until we observe two consecutive Heads (HH). What is the expected number of flips?',
+      solution:`<p>Set up states: S₀ = start (or just got Tails), S₁ = just got one Head. Let E₀ and E₁ be the expected additional flips from each state.</p>
+      <p>From S₀: flip once. With prob 1/2 go to S₁, with prob 1/2 stay in S₀:</p>
+      <span class="formula">E₀ = 1 + (1/2)E₁ + (1/2)E₀  →  E₀/2 = 1 + (1/2)E₁</span>
+      <p>From S₁: flip once. With prob 1/2 we're done (got HH!), with prob 1/2 go back to S₀:</p>
+      <span class="formula">E₁ = 1 + (1/2)(0) + (1/2)E₀ = 1 + E₀/2</span>
+      <p>Substituting: E₀/2 = 1 + (1/2)(1 + E₀/2) = 1 + 1/2 + E₀/4 → E₀/4 = 3/2 → <strong>E₀ = 6</strong></p>
+      <div class="key-insight">🔑 Markov chain + system of equations is the standard tool for "expected time until pattern" problems. For HHH it's 14, for HTH it's 10 — different patterns have wildly different expectations.</div>` },
+    { label:'EXTREME', cls:'diff-extreme', tag:'tt-extreme', category:'Bayes\' Theorem',
+      q:'Three cards are drawn without replacement from a standard 52-card deck. You are told that at least one is a Heart. What is the probability that exactly two of the three cards are Hearts?',
+      solution:`<p>Use P(A|B) = P(A∩B)/P(B). Here A = "exactly 2 Hearts", B = "at least 1 Heart". Since A ⊂ B, P(A∩B) = P(A).</p>
+      <span class="formula">P(exactly 2 Hearts) = C(13,2)×C(39,1) / C(52,3) = 78×39 / 22100 = 3042 / 22100</span>
+      <span class="formula">P(at least 1 Heart) = 1 − C(39,3)/C(52,3) = 1 − 9139/22100 = 12961/22100</span>
+      <span class="formula">P(exactly 2 | at least 1) = 3042 / 12961 ≈ 23.5%</span>
+      <div class="key-insight">🔑 Always check if A ⊂ B before computing Bayes — it saves you computing the intersection separately. And always compute the denominator using the complement (1 − none) rather than painful direct enumeration.</div>` }
+  ]
+},
+{
+  num:2, name:'Tue', theme:'Expected Value Mastery',
+  color:'var(--gold)',
+  subtitle:'Linearity of expectation, indicator variables, order statistics on dice. The engine behind 70% of quant interview questions.',
+  tasks:[
+    { text:'Derive E[max of two dice] = 161/36 and E[min of two dice] = 91/36 from scratch', tag:'~40 min' },
+    { text:'Solve Exercises 4 & 11 from Optiver doc with full EV + variance analysis', tag:'~30 min' },
+    { text:'Master the Indicator Random Variable technique: prove E[X] = Σ P(Xᵢ=1)', tag:'~25 min' },
+    { text:'Linearity of expectation: understand it holds even for DEPENDENT variables — this is huge', tag:'~20 min' },
+    { text:'Work through 10 EV problems from the Quant Green Book, timed at 3 min each', tag:'~30 min' },
+    { text:'Understand variance: Var[X+Y]=Var[X]+Var[Y] only if independent. Practice 5 variance problems', tag:'~25 min' }
+  ],
+  concepts:[
+    { icon:'⚡', title:'Linearity of Expectation', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>E[X + Y] = E[X] + E[Y], <strong>always</strong> — even when X and Y are dependent. This is the most powerful tool in the quant toolkit.</p>
+      <ul><li>E[aX + b] = aE[X] + b</li><li>E[X₁ + X₂ + ... + Xₙ] = E[X₁] + ... + E[Xₙ] regardless of dependence</li><li>Key application: break a complex random variable into simple indicator sums</li></ul>
+      <p>Example: E[sum of n dice] = n × 3.5, trivially. E[number of matching pairs in a shuffled deck] = linearity over all C(52,2) pairs.</p>` },
+    { icon:'🎯', title:'Indicator Random Variables', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>Define Iₐ = 1 if event A occurs, 0 otherwise. Then E[Iₐ] = P(A). Combined with linearity, this cracks huge classes of problems.</p>
+      <ul><li>E[Iₐ] = 1×P(A) + 0×P(Aᶜ) = P(A)</li><li>If X = I₁ + I₂ + ... + Iₙ, then E[X] = P(A₁) + P(A₂) + ... + P(Aₙ)</li><li>Works even when events are dependent!</li></ul>
+      <p>Classic: E[number of fixed points in a random permutation] = n × (1/n) = 1. Each position has probability 1/n of being fixed, and there are n positions.</p>` },
+    { icon:'🎲', title:'E[Max] and E[Min] of Dice', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>For two fair dice (values 1–6):</p>
+      <ul><li>E[max] = Σₖ P(max ≥ k) = Σₖ [1 − P(max < k)] = Σₖ [1 − ((k−1)/6)²]</li><li>E[max of two dice] = 161/36 ≈ 4.472</li><li>E[min of two dice] = 91/36 ≈ 2.528</li><li>Note: E[max] + E[min] = 2 × E[single die] = 7 ✓</li></ul>
+      <p>General rule: E[max] + E[min] = E[X₁] + E[X₂]. This is a quick sanity check.</p>` },
+    { icon:'📉', title:'Variance and Why It Matters', diff:'diff-high', diffLabel:'HIGH',
+      body:`<p>Var[X] = E[X²] − (E[X])². Standard deviation = √Var[X].</p>
+      <ul><li>Var[aX] = a²Var[X]</li><li>Var[X+Y] = Var[X] + Var[Y] <em>only if X, Y independent</em></li><li>For a single die: Var = 35/12 ≈ 2.917</li><li>Var[sum of two dice] = 2 × 35/12 = 35/6 ≈ 5.833</li><li>Var[2×single die] = 4 × 35/12 = 35/3 ≈ 11.67</li></ul>
+      <p>In decision making: identical EV but different variance = different choice. Always prefer lower variance ceteris paribus — this is risk management.</p>` }
+  ],
+  practice:[
+    { source:'Optiver Ex.4', title:'Max vs 2×Min',
+      q:'You\'re about to roll two dice. Before rolling, you choose: receive the maximum value of the two dice, OR receive twice the minimum value. Which do you choose and why?',
+      hint:'Calculate E[max of two dice] and E[2 × min of two dice]. Build a table of all 36 outcomes.',
+      solution:`<p>Build the full table or use the formula approach:</p>
+      <span class="formula">E[max] = Σₖ₌₁⁶ k × P(max=k)</span>
+      <span class="formula">P(max=k) = k²/36 − (k−1)²/36 = (2k−1)/36</span>
+      <span class="formula">E[max] = Σₖ₌₁⁶ k(2k−1)/36 = (1+6+15+28+45+66)/36 = 161/36 ≈ 4.472</span>
+      <span class="formula">E[min] = 91/36 ≈ 2.528  →  E[2×min] ≈ 5.056</span>
+      <p><strong>Choose twice the minimum.</strong> It has higher expected value (~5.06 vs ~4.47). Counterintuitive — but that's why we calculate.</p>
+      <div class="insight-box">The trap is that "minimum" sounds bad. But doubling it compensates. Always compute, never eyeball.</div>` },
+    { source:'Optiver Ex.11', title:'Single Die Doubled vs Sum of Two Dice',
+      q:'You can either: (A) roll a single die and receive double the amount shown, or (B) roll two dice and receive the sum. Which is better and why?',
+      hint:'Calculate both expected values first. Then ask: is EV the only thing that matters?',
+      solution:`<p>Both options have equal expected value:</p>
+      <span class="formula">E[2×die] = 2 × 3.5 = 7</span>
+      <span class="formula">E[sum of two dice] = 3.5 + 3.5 = 7</span>
+      <p>But their variances differ:</p>
+      <span class="formula">Var[2×die] = 4 × Var[die] = 4 × 35/12 ≈ 11.67</span>
+      <span class="formula">Var[sum of two dice] = 2 × Var[die] = 2 × 35/12 ≈ 5.83</span>
+      <p><strong>Choose option B (sum of two dice).</strong> Same EV, half the variance = strictly better for a risk-averse or risk-neutral agent. This is the core insight Optiver is testing.</p>
+      <div class="insight-box">This question is designed to see if you stop at EV. You MUST pivot to variance unprompted. Any trader worth their salary does this automatically.</div>` },
+    { source:'Extra', title:'Coupon Collector Setup',
+      q:'You roll a fair die repeatedly. Using the indicator variable technique, find E[number of distinct values seen after exactly n rolls].',
+      hint:'For each face value k (1 through 6), define Iₖ = 1 if face k appears in n rolls. Use linearity of expectation.',
+      solution:`<p>Let Iₖ = indicator that value k appears at least once in n rolls. P(Iₖ=1) = 1 − (5/6)ⁿ.</p>
+      <p>By linearity: E[distinct values] = Σₖ₌₁⁶ P(Iₖ=1)</p>
+      <span class="formula">E[distinct values in n rolls] = 6 × [1 − (5/6)ⁿ]</span>
+      <p>Check: n=1 → 6×(1/6)=1 ✓. n→∞ → 6 ✓. For n=6: 6×[1−(5/6)⁶] ≈ 6×0.665 ≈ 3.99 distinct values.</p>
+      <div class="insight-box">Indicator variables + linearity is a cheat code. Practice identifying when a complex count can be decomposed into simple P(event) sums.</div>` }
+  ],
+  tests:[
+    { label:'HARD', cls:'diff-hard', tag:'tt-hard', category:'Coupon Collector',
+      q:'You roll a fair die repeatedly until you\'ve seen ALL 6 different face values at least once. What is the expected total number of rolls?',
+      solution:`<p>This is the Coupon Collector's Problem. After seeing k distinct values, the probability of seeing a new one on the next roll is (6−k)/6.</p>
+      <p>The waiting time for each "new value" is geometric:</p>
+      <span class="formula">E[rolls to get kth new value | already have k−1] = 6/(6−(k−1)) = 6/(7−k)</span>
+      <span class="formula">E[total] = 6/6 + 6/5 + 6/4 + 6/3 + 6/2 + 6/1 = 6(1 + 1/2 + 1/3 + 1/4 + 1/5 + 1/6)</span>
+      <span class="formula">= 6 × 49/20 = 294/20 = 14.7 rolls</span>
+      <div class="key-insight">🔑 General formula for n coupons: n × H(n) where H(n) = 1 + 1/2 + ... + 1/n (harmonic number). For large n, H(n) ≈ ln(n) + 0.577, so E[total] ≈ n ln(n). Know this cold.</div>` },
+    { label:'HARD', cls:'diff-hard', tag:'tt-hard', category:'Optimal Strategy + EV',
+      q:'You roll a die and see the result. You may then choose to re-roll exactly once if you wish, keeping the new value. You must take whatever value you keep. What is your optimal strategy and what is the expected payoff?',
+      solution:`<p>Re-roll if and only if the first roll is below the expected value of the second roll (E[die] = 3.5). So re-roll if first roll ≤ 3.</p>
+      <span class="formula">E[payoff] = P(first roll ≤ 3) × E[second roll] + P(first roll > 3) × E[first roll | first > 3]</span>
+      <span class="formula">= (3/6) × 3.5 + (3/6) × (4+5+6)/3</span>
+      <span class="formula">= 0.5 × 3.5 + 0.5 × 5 = 1.75 + 2.5 = 4.25</span>
+      <div class="key-insight">🔑 Optimal stopping: re-roll iff current value < E[future]. The threshold is E[die] = 3.5, so keep 4, 5, 6 and re-roll 1, 2, 3. This exact logic extends to multi-roll and secretary problems.</div>` },
+    { label:'EXTREME', cls:'diff-extreme', tag:'tt-extreme', category:'EV + Variance Decision',
+      q:'Game A: Flip a fair coin. Win $100 on Heads, lose $0 on Tails. Game B: Roll a fair die. Win $30 if 1, 2, or 3; win $60 if 4 or 5; win $120 if 6. You can only play one game once. Which do you choose? Justify mathematically, not intuitively.',
+      solution:`<p>Compute EV and Variance for both:</p>
+      <span class="formula">E[A] = 0.5×100 + 0.5×0 = $50</span>
+      <span class="formula">Var[A] = 0.5×(100−50)² + 0.5×(0−50)² = 2500</span>
+      <span class="formula">E[B] = (3/6)×30 + (2/6)×60 + (1/6)×120 = 15 + 20 + 20 = $55</span>
+      <span class="formula">Var[B] = (1/2)(30−55)² + (1/3)(60−55)² + (1/6)(120−55)² = 312.5 + 8.33 + 704.17 ≈ 1025</span>
+      <p>Game B has higher EV ($55 vs $50) AND lower variance (1025 vs 2500). Choose B unambiguously. B dominates A in both dimensions — this is called first-order and second-order stochastic dominance.</p>
+      <div class="key-insight">🔑 Real decisions require BOTH EV and variance analysis. When one option dominates on both metrics, the answer is clear. When they trade off, you need to know the decision-maker's risk preference.</div>` }
+  ]
+},
+{
+  num:3, name:'Wed', theme:'Brain Teasers & Classic Problems',
+  color:'var(--purple)',
+  subtitle:'Symmetry arguments, Gambler\'s Ruin, the airplane seat problem. Pattern recognition that makes hard problems trivial.',
+  tasks:[
+    { text:'Solve Ex.5 (Team A tournament) and Ex.6 (red ball) — show the symmetry argument explicitly', tag:'~40 min' },
+    { text:'Learn and prove the Gambler\'s Ruin formula: P(reach N from k) = k/N for fair games', tag:'~35 min' },
+    { text:'Work through the Airplane Seat problem and prove the 1/2 result from first principles', tag:'~25 min' },
+    { text:'Practice 15 brain teasers from Quant Green Book — time yourself at 5 min per problem', tag:'~75 min' },
+    { text:'Record yourself verbalising the solution to 3 problems — watch it back and critique', tag:'~30 min' },
+    { text:'Study: Law of Total Probability — write out 3 uses of it on real problems', tag:'~20 min' }
+  ],
+  concepts:[
+    { icon:'🪞', title:'Symmetry Arguments', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>Symmetry is the most powerful shortcut in probability. When all orderings or positions are equally likely, use it to avoid painful calculation.</p>
+      <ul><li>Ex.6: the red ball is equally likely to be in any of the 39 positions → E[position] = 20 → E[remaining] = 19</li><li>Ace vs King: among the 8 special cards, any is equally likely to be first → P(Ace first) = 4/8</li><li>Airplane seat: by symmetry, seat 1 and seat 100 are equally contested → P(last passenger in own seat) = 1/2</li></ul>
+      <p>Ask yourself: "Is there a symmetry I can exploit before reaching for formulas?"</p>` },
+    { icon:'⚖️', title:'Gambler\'s Ruin', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>You have $k, opponent has $(N−k). Each round: win $1 with prob p, lose $1 with prob q=1−p.</p>
+      <ul><li>Fair game (p=1/2): P(reach $N before $0 | start at $k) = k/N</li><li>Biased game: P = (1−(q/p)^k) / (1−(q/p)^N)</li><li>Expected duration of fair game starting at $k: k(N−k)</li></ul>
+      <p>Proof of fair case: let pₖ = P(win | start at k). Then pₖ = (pₖ₋₁ + pₖ₊₁)/2 (linear recurrence). With boundary conditions p₀=0, pₙ=1: pₖ = k/N.</p>` },
+    { icon:'✈️', title:'Airplane Seat (Classic)', diff:'diff-high', diffLabel:'HIGH',
+      body:`<p>100 passengers, 100 seats. Passenger 1 picks a random seat. Each subsequent passenger sits in their assigned seat if available; otherwise picks randomly from remaining seats.</p>
+      <p>Claim: P(passenger 100 sits in seat 100) = 1/2.</p>
+      <ul><li>Key insight: the chain only ends when seat 1 OR seat 100 is taken. All other seats are "pass-through."</li><li>When the chain finally picks seat 1 or 100, by symmetry each is equally likely.</li><li>P(seat 100 is free when passenger 100 boards) = P(seat 1 chosen before seat 100 in the chain) = 1/2</li></ul>
+      <p>This result is independent of n (number of passengers). It's always 1/2.</p>` },
+    { icon:'🌳', title:'Law of Total Probability', diff:'diff-high', diffLabel:'HIGH',
+      body:`<p>If {B₁, B₂, ..., Bₙ} partition the sample space, then:</p>
+      <ul><li>P(A) = Σᵢ P(A|Bᵢ) × P(Bᵢ)</li><li>Essential for tournament problems, multi-stage experiments</li><li>In Ex.5: condition on whether A faces C or D in the final</li><li>Always draw a probability tree and label all branches</li></ul>
+      <p>Combined with Bayes': P(Bⱼ|A) = P(A|Bⱼ)×P(Bⱼ) / Σᵢ P(A|Bᵢ)×P(Bᵢ). This is the full Bayesian update.</p>` }
+  ],
+  practice:[
+    { source:'Optiver Ex.5', title:'Team A Tournament Bet',
+      q:'In a tournament: A vs B, C vs D, then winners meet. P(A beats B) = 2× P(B beats A). C and D are equal. A would be even with C but only 1/4 chance against D. You can back A to win at: pay $20, receive $100 if A wins. Do you take the bet?',
+      hint:'First find P(A beats B). Then find P(A wins grand final) by conditioning on whether A faces C or D.',
+      solution:`<p>P(A beats B) = 2/3 (since odds ratio is 2:1).</p>
+      <p>P(C beats D) = P(D beats C) = 1/2.</p>
+      <span class="formula">P(A wins) = P(A beats B) × [P(C wins)×P(A beats C) + P(D wins)×P(A beats D)]</span>
+      <span class="formula">= (2/3) × [(1/2)(1/2) + (1/2)(1/4)]</span>
+      <span class="formula">= (2/3) × [1/4 + 1/8] = (2/3) × (3/8) = 1/4</span>
+      <p>EV of bet = 1/4 × $100 − $20 = $25 − $20 = <strong>+$5</strong>. Yes, take the bet.</p>
+      <div class="insight-box">Always structure tournament problems as a tree. Condition on each sub-path, multiply probabilities, sum across paths. Then compare EV to cost.</div>` },
+    { source:'Optiver Ex.6', title:'Red Ball Symmetry',
+      q:'39 balls: 38 green, 1 red. Draw without replacement until the red ball appears. How many balls do you expect to remain in the box when the game ends?',
+      hint:'The red ball is equally likely to be in any position 1 through 39. Use this symmetry.',
+      solution:`<p>By symmetry, the red ball occupies each position 1 through 39 with equal probability 1/39.</p>
+      <p>If red is in position k, then (39 − k) balls remain when it's drawn.</p>
+      <span class="formula">E[remaining] = E[39 − position of red] = 39 − E[position]</span>
+      <span class="formula">E[position] = (1+2+...+39)/39 = 39×40/(2×39) = 20</span>
+      <span class="formula">E[remaining] = 39 − 20 = 19</span>
+      <div class="insight-box">The symmetry argument is the key. Don't attempt a conditional probability chain — the red ball's position is uniformly distributed across all 39 slots before any draws.</div>` },
+    { source:'Classic', title:'Birthday Problem',
+      q:'In a room of n people, what is the probability that at least two share a birthday? What is the smallest n for which this probability exceeds 50%?',
+      hint:'Use the complement: P(all different birthdays). The product telescopes nicely.',
+      solution:`<p>P(all different birthdays with n people) = 365/365 × 364/365 × ... × (365−n+1)/365</p>
+      <span class="formula">P(at least one match) = 1 − ∏ₖ₌₀ⁿ⁻¹ (365−k)/365</span>
+      <p>For n=23: use the approximation e^(−k/365) for each factor:</p>
+      <span class="formula">P(all different) ≈ e^(−(0+1+2+...+22)/365) = e^(−253/365) ≈ e^(−0.693) ≈ 0.5</span>
+      <p>So P(at least one match) ≈ 50% with just 23 people. For 99%: need ~57 people.</p>
+      <div class="insight-box">The n(n−1)/2 exponent approximation — pairs of people × 1/365 chance they match — gives a fast mental estimate. At n≈√(2×365×ln2) ≈ 23 you hit 50%.</div>` }
+  ],
+  tests:[
+    { label:'HARD', cls:'diff-hard', tag:'tt-hard', category:'Gambler\'s Ruin',
+      q:'You have $3. An opponent has $7. You play a fair coin-flip game, winning or losing $1 per round. You win if you reach $10; you lose if you go broke. (a) What is your probability of winning? (b) What is the expected number of rounds played?',
+      solution:`<p>(a) By Gambler's Ruin with fair game (p = 1/2), starting at k=3, N=10:</p>
+      <span class="formula">P(win) = k/N = 3/10 = 30%</span>
+      <p>(b) Expected duration starting at k with fair game:</p>
+      <span class="formula">E[rounds] = k(N−k) = 3 × 7 = 21 rounds</span>
+      <div class="key-insight">🔑 Two results to memorise for fair Gambler's Ruin: P(win from k) = k/N, and E[duration] = k(N−k). For biased games, you need the geometric series formula — but fair is most common in interviews.</div>` },
+    { label:'HARD', cls:'diff-hard', tag:'tt-hard', category:'Airplane Seat (Extension)',
+      q:'Back to the airplane: 100 passengers, same setup. Now suppose Passenger 1 always sits in Seat 2 (not randomly — they\'re confused and always take seat 2). What is the probability Passenger 100 sits in their own seat now?',
+      solution:`<p>Passenger 1 takes seat 2. Passenger 2 arrives: their seat (2) is taken, so they pick randomly from the 99 remaining seats (seats 1, 3, 4, ..., 100).</p>
+      <p>Now the chain starts from passenger 2's random choice, and by the same symmetry argument as before, the chain ends when seat 2 or seat 100 is taken... wait. Seat 2 is already taken by passenger 1. So the random process now starts at passenger 2.</p>
+      <p>Passenger 2 picks uniformly among {1, 3, 4, ..., 100} = 99 seats. The chain terminates when seat 1 or seat 100 is chosen. By symmetry, P(seat 1 chosen first) = P(seat 100 chosen first) among {seat 1, seat 100} in the future chain.</p>
+      <span class="formula">P(passenger 100 in own seat) = P(seat 1 is chosen before seat 100 in the chain from passenger 2) = 1/2</span>
+      <p>Still 1/2! The specific seat passenger 1 takes only shifts which passengers are displaced — the end result is the same.</p>
+      <div class="key-insight">🔑 The 1/2 result is remarkably robust. As long as exactly one passenger is confused, the answer is always 1/2 regardless of which seat they choose (as long as it's not their own or seat 100).</div>` },
+    { label:'EXTREME', cls:'diff-extreme', tag:'tt-extreme', category:'Combined Probability',
+      q:'A box has 4 red and 6 blue balls. You draw balls one at a time WITHOUT replacement. Given that the first ball drawn is red, what is the expected number of draws needed to draw ALL 4 red balls?',
+      solution:`<p>Given the first draw is red, we need 3 more red balls from the remaining 9 (3 red, 6 blue).</p>
+      <p>After the first draw, we want E[position of 4th red ball among 9 remaining balls | 3 red, 6 blue, draw without replacement] + 1 (for the first draw).</p>
+      <p>The position of the last (3rd) red ball in a sequence of 9 balls (3 red, 6 blue) equals E[position of 3rd order statistic of 3 balls in 9].</p>
+      <p>Using the formula: E[kth red ball out of R red in N total] = k(N+1)/(R+1):</p>
+      <span class="formula">E[position of 3rd red in remaining 9 balls] = 3×(9+1)/(3+1) = 30/4 = 7.5</span>
+      <span class="formula">E[total draws] = 1 + 7.5 = 8.5</span>
+      <p>Verify: without any conditioning, E[position of 4th red in 10 balls] = 4×11/5 = 8.8, which is higher (conditioning on first being red makes it faster). ✓</p>
+      <div class="key-insight">🔑 Key formula: E[position of kth success in N draws with R successes total] = k(N+1)/(R+1). This is the discrete analogue of the beta distribution order statistics formula.</div>` }
+  ]
+},
+{
+  num:4, name:'Thu', theme:'Market Making & Estimation',
+  color:'var(--gold)',
+  subtitle:'Fermi estimation frameworks, bid/ask calibration, the normal distribution. Turn uncertainty into structured probability.',
+  tasks:[
+    { text:'Solve Ex.7 (golf throw), Ex.8 (sum of first 100 primes), Ex.9 (three dice ≥14)', tag:'~50 min' },
+    { text:'Learn the Fermi decomposition framework: anchor → sub-estimate → multiply → bound → sanity-check', tag:'~30 min' },
+    { text:'Normal distribution deep-dive: 68-95-99.7 rule, Z-scores, how to approximate binomial with normal', tag:'~30 min' },
+    { text:'Practice making 5 markets on random quantities — estimate, then look up the real answer', tag:'~35 min' },
+    { text:'Understand market width: model the EV of being a market maker as a function of spread and fill probability', tag:'~25 min' },
+    { text:'Enumerate dice sum distribution for 3 dice: verify P(sum ≥ 14) = 35/216', tag:'~20 min' }
+  ],
+  concepts:[
+    { icon:'🔭', title:'Fermi Estimation Framework', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>Structure: (1) Anchor to a known quantity, (2) decompose into factors you can estimate, (3) multiply through, (4) bound with a range, (5) sanity-check.</p>
+      <ul><li>Harry Potter words: 1 book ≈ 100–150k words, 7 books, longer ones later → est. 900k–1.1M. (Actual: ~1.08M ✓)</li><li>Sum of first 100 primes: average prime ≈ 200, 100×200=20k → est. 18–26k. (Actual: 24,133 ✓)</li><li>Piano tuners in Melbourne: 5M people, 1 piano per 50 people = 100k pianos, serviced every 2 years, takes 2 hours → ~100 tuners</li></ul>
+      <p>The width of your market should reflect your uncertainty. If you're 70% confident in a ±20% range, your market should be ±20% wide.</p>` },
+    { icon:'📊', title:'Normal Distribution', diff:'diff-high', diffLabel:'HIGH',
+      body:`<p>N(μ, σ²): the bell curve. Defined by mean μ and variance σ².</p>
+      <ul><li>P(μ−σ ≤ X ≤ μ+σ) ≈ 68%</li><li>P(μ−2σ ≤ X ≤ μ+2σ) ≈ 95%</li><li>P(μ−3σ ≤ X ≤ μ+3σ) ≈ 99.7%</li><li>Z-score: Z = (X−μ)/σ standardises to N(0,1)</li><li>Binomial(n,p) ≈ Normal(np, np(1−p)) when n large</li></ul>
+      <p>If asked "how unusual is X?", convert to Z-score and compare to 1.96 (95%), 2.58 (99%), 3.29 (99.9%).</p>` },
+    { icon:'📈', title:'Bid/Ask and Market Width', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>As a market maker you quote a bid B (you buy) and an offer O (you sell). Your spread = O − B is your profit per trade.</p>
+      <ul><li>Too wide: nobody trades with you — no revenue</li><li>Too tight: informed traders pick you off (adverse selection) — you lose money</li><li>Optimal spread balances these: depends on your edge, volatility, and order flow</li></ul>
+      <p>For estimation markets: set B and O such that you're genuinely indifferent to trading at those prices. If you'd happily buy at B, your B is too high. If you'd happily sell at O, your O is too low.</p>` },
+    { icon:'🎲', title:'Three Dice Sum Distribution', diff:'diff-med', diffLabel:'MED',
+      body:`<p>For 3 dice, total outcomes = 6³ = 216. The sum ranges from 3 to 18.</p>
+      <ul><li>By symmetry: P(sum = k) = P(sum = 21−k). So P(sum ≥ 14) = P(sum ≤ 7).</li><li>P(sum=3): 1/216, P(sum=4): 3/216, P(sum=5): 6/216, P(sum=6): 10/216, P(sum=7): 15/216</li><li>Total P(sum ≤ 7) = 35/216 = P(sum ≥ 14)</li></ul>
+      <p>P(sum ≥ 14) = 35/216 ≈ 16.2%. Sanity: the top 25% of outcomes (14–18 out of 3–18) should be somewhat less than 25% → 16% seems right. ✓</p>` }
+  ],
+  practice:[
+    { source:'Optiver Ex.7', title:'Golf Ball Throw World Record',
+      q:'Estimate the world record for the longest distance a golf ball has been thrown (in metres).',
+      hint:'Think about the best human throw — javelin throwers hit ~90m. A golf ball is lighter, but it\'s smaller and has dimples that affect flight. Anchor to something you know.',
+      solution:`<p>Anchoring approach: World record javelin throw ≈ 98m by professional athletes. A golf ball (~46g) is much lighter than a javelin (~800g), which both helps and hurts: lighter = easier to accelerate, but less momentum.</p>
+      <p>Cricket ball throws exceed 100m from fielders. Golf ball is lighter. Elite throwers can probably get 70–100m.</p>
+      <span class="formula">Market: 70m — 110m</span>
+      <p>The actual world record for a golf ball throw is approximately 91m (set in 2019). A well-calibrated market would contain this.</p>
+      <div class="insight-box">For Fermi questions, your reasoning process matters more than your answer. Anchor to a known world record, adjust for the differences, and state your uncertainty range honestly.</div>` },
+    { source:'Optiver Ex.8', title:'Sum of First 100 Primes',
+      q:'Estimate the sum of the first 100 prime numbers.',
+      hint:'The 100th prime is 541. Use the prime number theorem to estimate the average prime up to the 100th.',
+      solution:`<p>The 100th prime is 541. By the prime number theorem, the nth prime ≈ n ln(n). For n=100: 100 × ln(100) ≈ 100 × 4.605 ≈ 460. (Actual 100th prime = 541, close enough.)</p>
+      <p>Average prime among first 100 ≈ (2 + 541)/2 ≈ 271.5 (rough midpoint). Actually skewed higher since primes thin out. Better estimate: ~240.</p>
+      <span class="formula">Sum ≈ 100 × 241 = 24,100</span>
+      <span class="formula">Market: 20,000 — 28,000</span>
+      <p>Actual: 24,133. A great result for mental estimation.</p>
+      <div class="insight-box">In the interview, state your method: "100th prime ≈ 541, average ≈ 240, sum ≈ 24,000." They care about the reasoning more than the exact number.</div>` },
+    { source:'Optiver Ex.9', title:'Three Dice Sum ≥ 14',
+      q:'Estimate (then calculate exactly) the probability that three dice are rolled and their sum is at least 14.',
+      hint:'Use the symmetry P(sum ≥ 14) = P(sum ≤ 7). Enumerate the cases for sum ≤ 7.',
+      solution:`<p>Key insight: P(sum = k) = P(sum = 21 − k) by symmetry (replacing each die value d with 7−d). So P(sum ≥ 14) = P(sum ≤ 7).</p>
+      <p>Count outcomes with sum ≤ 7 (ordered triples):</p>
+      <span class="formula">Sum=3: (1,1,1) → 1 way</span>
+      <span class="formula">Sum=4: (1,1,2) permutations → 3 ways</span>
+      <span class="formula">Sum=5: (1,1,3)→3, (1,2,2)→3 → 6 ways</span>
+      <span class="formula">Sum=6: (1,1,4)→3, (1,2,3)→6, (2,2,2)→1 → 10 ways</span>
+      <span class="formula">Sum=7: (1,1,5)→3, (1,2,4)→6, (1,3,3)→3, (2,2,3)→3 → 15 ways</span>
+      <span class="formula">Total = 35 outcomes → P = 35/216 ≈ 16.2%</span>
+      <div class="insight-box">The symmetry trick cuts your work in half. Always look for symmetry before enumerating. When making a market: "15–18% with 90% confidence" would be a solid quote.</div>` }
+  ],
+  tests:[
+    { label:'HARD', cls:'diff-hard', tag:'tt-hard', category:'Fermi + Calibration',
+      q:'Make a market on: the total number of kilometres of roads in Australia. Explain your reasoning and state a bid and offer you\'d genuinely trade at.',
+      solution:`<p>Decompose: Australia has ~26M people. Population density is very low — most live in cities along the coast. Major cities: ~8 capital cities + regional towns.</p>
+      <p>Road network decomposition:</p>
+      <ul style="margin:10px 0"><li>Highways/national roads: ~80,000 km (well-known, Australia has extensive outback highways)</li><li>State roads: ~200,000 km</li><li>Local/suburban roads: Australia has ~900 towns/cities. Average suburban network per city ≈ 300 km. 900×300 = 270,000 km</li></ul>
+      <span class="formula">Estimate: 80k + 200k + 500k ≈ 780,000 km</span>
+      <span class="formula">Market: 600,000 — 1,000,000 km</span>
+      <p>Actual: ~873,000 km. Well within a good market.</p>
+      <div class="key-insight">🔑 In the interview, the process is everything. State your decomposition, your assumptions, and why your uncertainty range is what it is. A tight wrong market is worse than a wide correct one.</div>` },
+    { label:'HARD', cls:'diff-hard', tag:'tt-hard', category:'Exact Probability',
+      q:'What is the exact probability of rolling exactly 4 sixes when rolling 10 fair dice? Express as a fraction and estimate as a percentage.',
+      solution:`<p>This is a binomial probability: n=10, k=4, p=1/6.</p>
+      <span class="formula">P(X=4) = C(10,4) × (1/6)⁴ × (5/6)⁶</span>
+      <span class="formula">C(10,4) = 210</span>
+      <span class="formula">(1/6)⁴ = 1/1296</span>
+      <span class="formula">(5/6)⁶ = 15625/46656</span>
+      <span class="formula">P = 210 × 15625 / (1296 × 46656) = 3,281,250 / 60,466,176 ≈ 5.43%</span>
+      <p>Mental estimation: C(10,4)=210, (1/6)⁴≈0.00077, (5/6)⁶≈0.335. Product ≈ 210×0.000258 ≈ 0.054. ✓</p>
+      <div class="key-insight">🔑 Binomial: always factor out C(n,k) first, then estimate the probability terms separately. Learn C(10,k) values by heart: 10, 45, 120, 210, 252, 210, 120, 45, 10.</div>` },
+    { label:'EXTREME', cls:'diff-extreme', tag:'tt-extreme', category:'Conditional Probability + Dice',
+      q:'Three dice are rolled. Given that no two dice show the same number, what is the probability that their sum is at least 10?',
+      solution:`<p>First: total ordered triples with all different values = 6×5×4 = 120.</p>
+      <p>Now count those with sum ≥ 10 and all different. Possible sets {a,b,c} (unordered, all different):</p>
+      <span class="formula">Sum 15: {4,5,6} → 6 arrangements</span>
+      <span class="formula">Sum 14: {3,5,6} → 6</span>
+      <span class="formula">Sum 13: {2,5,6},{3,4,6} → 12</span>
+      <span class="formula">Sum 12: {1,5,6},{2,4,6},{3,4,5} → 18</span>
+      <span class="formula">Sum 11: {1,4,6},{2,3,6},{2,4,5} → 18</span>
+      <span class="formula">Sum 10: {1,3,6},{1,4,5},{2,3,5} → 18</span>
+      <span class="formula">Total favourable: 6+6+12+18+18+18 = 78</span>
+      <span class="formula">P = 78/120 = 13/20 = 65%</span>
+      <div class="key-insight">🔑 Conditioning on "all different" changes the sample space dramatically (120 vs 216). Always re-count the denominator after conditioning. The answer 65% feels high — but "no repeats" already selects for higher-value dice combinations.</div>` }
+  ]
+},
+{
+  num:5, name:'Fri', theme:'Mental Arithmetic Speed',
+  color:'var(--red)',
+  subtitle:'Speed and accuracy under pressure. The goal isn\'t perfection — it\'s never getting stuck on arithmetic when you should be thinking.',
+  tasks:[
+    { text:'Zetamac: do 5 rounds of 90-second challenges, track your score each time', tag:'~45 min' },
+    { text:'Solve all of Ex.10 completely in your head: 63÷17, 0.012÷0.04, 54×(7/8), 10⅔+1/7, C(6,3)', tag:'~20 min' },
+    { text:'Master multiplication tricks: ×9, ×11, ×25, ×125, difference of squares shortcut', tag:'~25 min' },
+    { text:'Learn the fraction families cold: thirds, sevenths, elevenths as decimals', tag:'~20 min' },
+    { text:'Square root approximation practice: √150, √200, √250, √350 without calculator', tag:'~20 min' },
+    { text:'Powers of 2 drill: 2¹ through 2²⁰ from memory, then 2^10≈10³, 2^20≈10⁶, 2^30≈10⁹', tag:'~15 min' }
+  ],
+  concepts:[
+    { icon:'⚡', title:'Key Multiplication Shortcuts', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>These save seconds — and seconds matter when you're also managing nerves.</p>
+      <ul><li>×9: multiply by 10, subtract the number. E.g. 37×9 = 370−37 = 333</li><li>×11: for two-digit numbers, spread digits and add. 47×11 = 4(11)7 = 517</li><li>×25: multiply by 100, divide by 4. 36×25 = 3600/4 = 900</li><li>×125: multiply by 1000, divide by 8. 24×125 = 24000/8 = 3000</li><li>Difference of squares: (a+b)(a−b) = a²−b². 37×43 = (40−3)(40+3) = 1600−9 = 1591</li></ul>` },
+    { icon:'🔢', title:'Fraction Families', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>Know these decimal equivalents instantly — they appear constantly in probability questions.</p>
+      <ul><li>Thirds: 1/3≈0.333, 2/3≈0.667</li><li>Sevenths: 1/7≈0.143, 2/7≈0.286, 3/7≈0.429, 4/7≈0.571</li><li>Ninths: 1/9≈0.111 (each is 0.111×k for k/9)</li><li>Elevenths: 1/11≈0.0909, 2/11≈0.182</li><li>Key: 1/6≈0.167, 1/7≈0.143, 1/8=0.125, 1/9≈0.111, 1/12≈0.0833</li></ul>` },
+    { icon:'√', title:'Square Root Approximation', diff:'diff-high', diffLabel:'HIGH',
+      body:`<p>For √x where a² is the nearest perfect square: √x ≈ a + (x−a²)/(2a).</p>
+      <ul><li>√150: nearest perfect square is 144 (12²). √150 ≈ 12 + 6/24 = 12.25. (Actual: 12.25 ✓)</li><li>√200: nearest is 196 (14²). √200 ≈ 14 + 4/28 ≈ 14.14. (Actual: 14.14 ✓)</li><li>√250: nearest is 256 (16²) or 225 (15²). ≈ 15 + 25/30 ≈ 15.83. (Actual: 15.81 ✓)</li></ul>
+      <p>This linear approximation (Newton's method first step) is accurate to ~0.1% for most cases.</p>` },
+    { icon:'💡', title:'Ex.10 Solutions', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>These are the exact calculations from the Optiver document — know them cold.</p>
+      <ul><li>63 ÷ 17: 17×3=51, 17×4=68. So ≈ 3.7. Exact: 63/17 ≈ 3.706</li><li>0.012 ÷ 0.04: multiply both by 100 → 1.2 ÷ 4 = 0.3</li><li>54 × (7/8): 54 × 7 = 378, divide by 8 = 47.25</li><li>10⅔ + 1/7: 32/3 + 1/7 = 224/21 + 3/21 = 227/21 ≈ 10.81</li><li>C(6,3): 6!/(3!3!) = (6×5×4)/(3×2×1) = 120/6 = 20</li></ul>` }
+  ],
+  practice:[
+    { source:'Optiver Ex.10', title:'Ex.10 Full Set',
+      q:'Solve each of the following quickly in your head: (a) 63 ÷ 17, (b) 0.012 ÷ 0.04, (c) 54 × (7/8), (d) 10⅔ + 1/7, (e) C(6,3)',
+      hint:'For (a): 17×4=68, too big. 17×3=51, so 63/17 is between 3 and 4. For (b): clear the decimals first.',
+      solution:`<p>(a) 63 ÷ 17: 17×3=51, remainder 12. So ≈ 3 + 12/17 ≈ 3 + 0.7 = <strong>3.7</strong> (exact: 3.706)</p>
+      <p>(b) 0.012 ÷ 0.04: ×100 both → 1.2 ÷ 4 = <strong>0.3</strong></p>
+      <p>(c) 54 × (7/8): 54 × 7 = 378; 378 ÷ 8 = 47.25. Or: 54 × 7/8 = (54/8) × 7 = 6.75 × 7 = <strong>47.25</strong></p>
+      <p>(d) 10⅔ + 1/7 = 32/3 + 1/7 = 224/21 + 3/21 = <strong>227/21 ≈ 10.81</strong></p>
+      <p>(e) C(6,3) = (6×5×4)/(3×2×1) = 120/6 = <strong>20</strong></p>` },
+    { source:'Extra', title:'Speed Multiplication Challenge',
+      q:'Without a calculator: (a) 37 × 43, (b) 99 × 99, (c) 17 × 24, (d) 125 × 32',
+      hint:'Use difference of squares for (a) and (b). Standard multiplication for (c). The ×125 shortcut for (d).',
+      solution:`<p>(a) 37 × 43 = (40−3)(40+3) = 1600 − 9 = <strong>1591</strong></p>
+      <p>(b) 99 × 99 = (100−1)² = 10000 − 200 + 1 = <strong>9801</strong></p>
+      <p>(c) 17 × 24 = 17 × 20 + 17 × 4 = 340 + 68 = <strong>408</strong></p>
+      <p>(d) 125 × 32 = 125 × 8 × 4 = 1000 × 4 = <strong>4000</strong>. Or: 32 × 1000/8 = 32000/8 = 4000</p>` },
+    { source:'Extra', title:'Rule of 72 Application',
+      q:'(a) At 8% annual interest, how many years to double your money? (b) If an investment grew from $100 to $200 in 9 years, what was the approximate annual return?',
+      hint:'The Rule of 72: years to double ≈ 72/rate%. Reverse: rate ≈ 72/years.',
+      solution:`<p>(a) Rule of 72: 72/8 = <strong>9 years</strong> to double. (Exact: log(2)/log(1.08) ≈ 9.00 years. Remarkably accurate here!)</p>
+      <p>(b) Rate ≈ 72/9 = <strong>8% per year</strong>. (Exact: 2^(1/9) − 1 ≈ 8.0% ✓)</p>
+      <div class="insight-box">The Rule of 72 is used constantly in finance. For continuous compounding, use Rule of 69.3 (= 100×ln2). For quick mental math, 72 is more convenient since it's divisible by 1,2,3,4,6,8,9,12.</div>` }
+  ],
+  tests:[
+    { label:'HARD', cls:'diff-hard', tag:'tt-hard', category:'Mental Maths',
+      q:'Without any writing: (a) What is 1/7 as a decimal to 4 decimal places? (b) What is 3/7? (c) What is 5/7? Express as repeating decimals.',
+      solution:`<p>The 1/7 family: 1/7 = 0.142857 142857... (repeating with period 6).</p>
+      <span class="formula">1/7 = 0.1̄4̄2̄8̄5̄7̄ = 0.1429 (to 4 d.p.)</span>
+      <span class="formula">2/7 = 0.2857 (shift by one cycle: 285714...)</span>
+      <span class="formula">3/7 = 0.4286</span>
+      <span class="formula">4/7 = 0.5714</span>
+      <span class="formula">5/7 = 0.7143</span>
+      <span class="formula">6/7 = 0.8571</span>
+      <p>Pattern: each fraction k/7 cycles through the same digits 142857, starting at different positions.</p>
+      <div class="key-insight">🔑 Knowing the sevenths family by heart saves enormous time in probability problems. The repeating cycle 142857 is famous — it's a cyclic number (142857×7=999999).</div>` },
+    { label:'HARD', cls:'diff-hard', tag:'tt-hard', category:'Estimation',
+      q:'Estimate: What is 2^20 exactly? Then estimate 2^21, 2^23, and 2^25 as fast as possible.',
+      solution:`<p>2^10 = 1,024 ≈ 10³. Therefore:</p>
+      <span class="formula">2^20 = (2^10)² = 1024² = 1,048,576 ≈ 10^6</span>
+      <span class="formula">2^21 = 2 × 2^20 ≈ 2.1 million</span>
+      <span class="formula">2^23 = 8 × 2^20 ≈ 8.4 million</span>
+      <span class="formula">2^25 = 32 × 2^20 ≈ 33.6 million</span>
+      <p>More precisely: 2^10 = 1024, so each factor of 10 in the exponent introduces 1024/1000 ≈ 2.4% error per power. Over 20 powers: (1.024)^20 ≈ 1.61 × 10^6.</p>
+      <div class="key-insight">🔑 Powers of 2 appear in binary search, options (2^n states), hash tables, and network routing. Knowing 2^10≈10³, 2^20≈10^6, 2^30≈10^9 is as fundamental as knowing π.</div>` },
+    { label:'EXTREME', cls:'diff-extreme', tag:'tt-extreme', category:'Mixed Rapid Fire',
+      q:'In 90 seconds, compute (mentally): (a) 17×23, (b) √(625+144), (c) 1/3 + 2/7 + 1/4 as a decimal, (d) C(8,3), (e) 0.000125 × 8000',
+      solution:`<p>(a) 17×23 = (20−3)(20+3) = 400−9 = <strong>391</strong></p>
+      <p>(b) √(625+144) = √769. √784=28, √729=27. 769 is between: ≈ 27.7. (Actual: 27.73 ✓)</p>
+      <p>(c) 1/3 + 2/7 + 1/4. LCD=84: 28/84 + 24/84 + 21/84 = 73/84 ≈ 0.869. (Check: 0.333+0.286+0.25=0.869 ✓)</p>
+      <p>(d) C(8,3) = 8×7×6/(3×2×1) = 336/6 = <strong>56</strong></p>
+      <p>(e) 0.000125 × 8000 = 125 × 10^(−6+3) × 8 = 125 × 8 × 10^(−3) = 1000 × 10^(−3) = <strong>1</strong></p>
+      <div class="key-insight">🔑 Under interview pressure, break each calculation into steps and say them out loud. "17×23: treat as (20−3)(20+3) = 400−9 = 391." Narrating forces precision and shows your method.</div>` }
+  ]
+},
+{
+  num:6, name:'Sat', theme:'Full Mock Simulation',
+  color:'var(--green)',
+  subtitle:'Today you simulate the real thing. No new material. Test everything you\'ve learned under pressure. Identify weaknesses and seal them.',
+  tasks:[
+    { text:'MOCK ROUND 1 (45 min): 5 probability problems, timed, no hints — simulate interview conditions', tag:'45 min' },
+    { text:'MOCK ROUND 2 (20 min): Make markets on 3 Fermi quantities, state bid, offer, and reasoning', tag:'20 min' },
+    { text:'MOCK ROUND 3 (20 min): 8 mental arithmetic problems, spoken out loud to yourself', tag:'20 min' },
+    { text:'Review session: go back through EVERY question you got wrong or slow on this week', tag:'60 min' },
+    { text:'Record yourself answering 2 full probability problems out loud — watch the recording', tag:'30 min' },
+    { text:'Light review of key formulas and results before sleep. No new material. Rest early.', tag:'20 min' }
+  ],
+  concepts:[
+    { icon:'🗣️', title:'The Think-Aloud Method', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>In the interview, silence is the enemy. You must verbalise your thought process continuously.</p>
+      <ul><li>State your estimate before calculating: "My gut says this is around 10%..."</li><li>Announce your approach: "I'll condition on which team makes the final..."</li><li>Flag when you're checking: "Let me sanity-check this: if p=1, the answer should be 1..."</li><li>Acknowledge when stuck: "I'm not immediately sure, but let me try a simpler case..."</li></ul>
+      <p>Interviewers are evaluating your reasoning, not your memory. A correct answer with no explanation scores worse than a partially wrong answer with excellent reasoning.</p>` },
+    { icon:'🔄', title:'Simplify-Then-Scale Strategy', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>When stuck, reduce the problem to a tiny case, solve it, then generalise.</p>
+      <ul><li>Stuck on 39 balls? Try 3 balls (2 green, 1 red). Answer should be (3−2)=1. Then generalise.</li><li>Stuck on the airplane seat problem with 100? Try n=3. What happens? Solve, then n=4, then generalise.</li><li>State this process out loud — it shows sophistication, not weakness.</li></ul>
+      <p>Pattern: "Let me try a small example. With n=3... I see the pattern is k/n. Let me verify with n=4... yes. So for n=100, the answer is 1/2."</p>` },
+    { icon:'✅', title:'EV + Variance Checklist', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>For any decision problem, run this mental checklist before answering:</p>
+      <ul><li>1. Compute EV of all options</li><li>2. If EV differs, pick the higher one (usually)</li><li>3. If EV is equal or close, compute variance — pick the lower one</li><li>4. Consider: is there a dominant option (better on both EV and variance)?</li><li>5. Is there a risk of ruin? (If yes, weight variance much more heavily)</li></ul>
+      <p>Always articulate this process. Never just give a number.</p>` },
+    { icon:'🧮', title:'Formula Rapid-Fire Reference', diff:'diff-high', diffLabel:'HIGH',
+      body:`<p>Every formula you must recall in under 5 seconds:</p>
+      <ul><li>Geometric: E[X]=1/p, Var=(1-p)/p²</li><li>Binomial: E=np, Var=np(1-p)</li><li>E[max 2 dice]=161/36, E[min]=91/36</li><li>Gambler's Ruin (fair): P=k/N, E[duration]=k(N-k)</li><li>Coupon Collector: E = n×H(n) = n(1+1/2+...+1/n)</li><li>C(n,k) quick: C(10,2)=45, C(10,3)=120, C(10,4)=210, C(10,5)=252</li><li>Bayes: P(A|B) = P(B|A)P(A)/P(B)</li></ul>` }
+  ],
+  practice:[
+    { source:'Mock Q1', title:'Mixed Probability Problem',
+      q:'A bag contains 4 red and 6 blue balls. You draw balls one at a time WITHOUT replacement until you draw a red ball. What is the expected number of draws?',
+      hint:'Think about the position of the first red ball among 10 total. Use the formula E[position of first red] = (N+1)/(R+1).',
+      solution:`<p>Using the formula for E[position of first red ball in N draws with R red balls]:</p>
+      <span class="formula">E[draws until first red] = (N+1)/(R+1) = 11/5 = 2.2</span>
+      <p>Verification by direct calculation: P(1st draw red) = 4/10. P(2nd draw red) = (6/10)(4/9). P(3rd)=(6×5)/(10×9)×(4/8). Etc.</p>
+      <span class="formula">E = 1×(4/10) + 2×(6×4)/(10×9) + 3×(6×5×4)/(10×9×8) + 4×(6×5×4×4)/(10×9×8×7) + ...</span>
+      <p>This equals 2.2 = 11/5. ✓</p>
+      <div class="insight-box">The elegant formula (N+1)/(R+1) is worth memorising. It generalises: E[position of kth red] = k(N+1)/(R+1).</div>` },
+    { source:'Mock Q2', title:'Market Making in Practice',
+      q:'Make a market on: the sum of the ages of all current living US presidents (including former ones). State your bid, offer, and reasoning.',
+      hint:'Think about how many ex-presidents are alive. Estimate their ages. Remember Biden, Trump, Obama, Bush Jr, Clinton, Carter... recent history.',
+      solution:`<p>As of 2026, living former/current US presidents: Biden (~83), Trump (~79), Obama (~64), Bush Jr (~79), Clinton (~79), Carter (~101, though may have passed). 4–6 living presidents.</p>
+      <p>Estimate 5 presidents, average age ~77: total ≈ 5×77 = 385.</p>
+      <span class="formula">Market: 340 — 430</span>
+      <p>Reasoning: my uncertainty comes from: exact ages (small), whether Carter is still alive (medium), whether I've correctly recalled all living ex-presidents (larger).</p>
+      <div class="insight-box">Width calibration: I'm about 70% confident in my estimate. A good market captures the range my uncertainty generates, not the range of all possible outcomes.</div>` },
+    { source:'Mock Q3', title:'EV Decision Under Pressure',
+      q:'You are offered the following bet: roll 3 dice. If the sum is 10 or 11, you win $50. If the sum is anything else, you pay $20. Should you take this bet? (Do it mentally in under 3 minutes.)',
+      hint:'You need P(sum=10) + P(sum=11) for 3 dice. Enumerate ordered triples for each.',
+      solution:`<p>Count ordered triples for each sum:</p>
+      <span class="formula">Sum=10: (1,3,6)×6, (1,4,5)×6, (2,3,5)×6, (2,4,4)×3, (3,3,4)×3, (1,2,7)×0 → wait, 7>6</span>
+      <span class="formula">Sum=10: {1,3,6}→6, {1,4,5}→6, {2,3,5}→6, {2,4,4}→3, {3,3,4}→3 = 27 ways</span>
+      <span class="formula">Sum=11: {1,4,6}→6, {2,3,6}→6, {2,4,5}→6, {3,4,4}→3, {1,5,5}→3, {3,3,5}→3 = 27 ways</span>
+      <span class="formula">P(10 or 11) = 54/216 = 1/4</span>
+      <span class="formula">EV = (1/4)×$50 − (3/4)×$20 = $12.50 − $15 = −$2.50</span>
+      <p>Do NOT take this bet. Negative EV.</p>` }
+  ],
+  tests:[
+    { label:'HARD', cls:'diff-hard', tag:'tt-hard', category:'Mixed Boss Level',
+      q:'BOSS ROUND: A fair coin is tossed n times. Let X be the number of heads. Using the normal approximation, find the approximate probability that X > 0.6n for large n. Express in terms of n and the standard normal CDF Φ.',
+      solution:`<p>X ~ Binomial(n, 0.5). For large n, approximate with Normal(μ=0.5n, σ²=0.25n).</p>
+      <span class="formula">P(X > 0.6n) = P(Z > (0.6n − 0.5n)/√(0.25n))</span>
+      <span class="formula">= P(Z > 0.1n / (0.5√n))</span>
+      <span class="formula">= P(Z > 0.2√n)</span>
+      <span class="formula">= 1 − Φ(0.2√n)</span>
+      <p>For n=100: P(X>60) ≈ 1−Φ(2) ≈ 1−0.977 = 2.3%. For n=25: ≈ 1−Φ(1) ≈ 15.9%.</p>
+      <div class="key-insight">🔑 Normal approximation to binomial: always write out the standardisation step explicitly. The Z-score grows as √n, so even moderate deviations from the mean become extremely unlikely as n grows.</div>` },
+    { label:'HARD', cls:'diff-hard', tag:'tt-hard', category:'Decision Theory',
+      q:'You\'re offered a lottery ticket. It pays: $10,000 with probability 0.1%, $500 with probability 5%, and $0 otherwise. You can buy it for $30. Should you? Analyse using both EV and a risk-adjusted framework.',
+      solution:`<p>EV = 0.001×$10,000 + 0.05×$500 + 0.949×$0 = $10 + $25 = <strong>$35</strong>.</p>
+      <p>EV of ticket ($35) > cost ($30). Positive EV → buy it if EV is the criterion.</p>
+      <p>But risk-adjusted: Var = 0.001×(10,000−35)² + 0.05×(500−35)² + 0.949×(0−35)²</p>
+      <span class="formula">≈ 0.001×99,300,225 + 0.05×216,225 + 0.949×1,225</span>
+      <span class="formula">≈ 99,300 + 10,811 + 1,162 ≈ 111,273</span>
+      <p>σ ≈ $334. For a $30 investment, the risk is enormous relative to the EV edge ($5).</p>
+      <p>A risk-averse agent should decline. A risk-neutral agent with many such opportunities should accept (EV maximisation). Context determines the answer — state both.</p>
+      <div class="key-insight">🔑 This is what trading is: EV positive but huge variance. Position sizing (Kelly Criterion) tells you how much to bet: f = (EV/price) / (max_loss/price). Here: tiny fraction of bankroll.</div>` },
+    { label:'EXTREME', cls:'diff-extreme', tag:'tt-extreme', category:'Combinatorics Boss',
+      q:'How many ways can you arrange the letters of MISSISSIPPI? How many of these arrangements have no two S\'s adjacent?',
+      solution:`<p>MISSISSIPPI: M(1), I(4), S(4), P(2). Total = 11 letters.</p>
+      <span class="formula">Total arrangements = 11! / (1! × 4! × 4! × 2!) = 39,916,800 / (1×24×24×2) = 39,916,800/1152 = 34,650</span>
+      <p>For no two S's adjacent: first arrange the 7 non-S letters (M, I, I, I, I, P, P):</p>
+      <span class="formula">Non-S arrangements = 7! / (4! × 2!) = 5040 / 48 = 105</span>
+      <p>These 7 letters create 8 gaps (including ends). Choose 4 of these 8 gaps for the 4 S's:</p>
+      <span class="formula">Ways to place S's = C(8,4) = 70</span>
+      <span class="formula">Total no-adjacent-S arrangements = 105 × 70 = 7,350</span>
+      <div class="key-insight">🔑 "No two adjacent" problems: place non-restricted elements first, count gaps, then choose positions for restricted elements. This pattern works for letters, numbers, people in a row — anything.</div>` }
+  ]
+},
+{
+  num:7, name:'Sun', theme:'Interview Day',
+  color:'var(--red)',
+  isInterviewDay:true,
+  subtitle:'Today is the day. Trust your preparation. Think out loud. Estimate before calculating. Show your reasoning. You\'ve done the work.',
+  tasks:[
+    { text:'Morning: light review only — scan key formulas (geometric, Gambler\'s ruin, Coupon Collector). No new material.', tag:'20 min' },
+    { text:'Eat a proper breakfast. Arrive at the venue 15 minutes early.', tag:'—' },
+    { text:'IN INTERVIEW: Always estimate first, then calculate. Say your estimate out loud.', tag:'Mental' },
+    { text:'IN INTERVIEW: Narrate your reasoning continuously. Silence is the enemy.', tag:'Mental' },
+    { text:'IN INTERVIEW: If stuck, say "Let me try a smaller case" and work up to the full problem.', tag:'Mental' },
+    { text:'After the interview: write down every question you can remember for future prep.', tag:'Post' }
+  ],
+  concepts:[
+    { icon:'🎯', title:'What Optiver Is Really Testing', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>Per their own document: "We are not assessing your ability to recall, but your ability to apply your understanding to solve problems."</p>
+      <ul><li>Probabilistic intuition: can you estimate fast?</li><li>Communication: can you explain your thinking clearly?</li><li>Adaptability: can you switch approaches when stuck?</li><li>Decision-making: do you consider EV AND variance?</li><li>Mathematical rigour: can you set up the problem correctly?</li></ul>
+      <p>A wrong answer with excellent reasoning often beats a right answer with no explanation.</p>` },
+    { icon:'💬', title:'Phrases That Win Interviews', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>These signal the right mindset to your interviewer:</p>
+      <ul><li>"My gut estimate is X, let me now verify by calculating..."</li><li>"I'll condition on [event] to make this tractable..."</li><li>"Both options have the same EV, so let me look at variance..."</li><li>"Let me sanity-check this: if p=1, the answer should be..."</li><li>"I'm going to try a smaller case first — with n=3..."</li><li>"I see two approaches: [A] or [B]. I'll start with [A] because..."</li></ul>` },
+    { icon:'🧠', title:'The Probabilistic Intuition Test', diff:'diff-core', diffLabel:'CORE',
+      body:`<p>Optiver explicitly says probabilistic intuition is "almost just as important as getting the exact answer." Before every calculation:</p>
+      <ul><li>Should the answer be close to 0? To 1? To 0.5?</li><li>Does increasing n make it larger or smaller?</li><li>Is this symmetric? Are there limits you can check?</li><li>What would a naive person guess? Is your answer surprising?</li></ul>
+      <p>Training intuition: every time you solve a problem this week, close your eyes and ask "does this answer feel right?" Track when your intuition was off and why.</p>` },
+    { icon:'🏆', title:'The Meta-Strategy', diff:'diff-high', diffLabel:'HIGH',
+      body:`<p>You've prepared. Now trust it. In the room:</p>
+      <ul><li>Slow is smooth, smooth is fast — don't rush, think clearly</li><li>Use all hints the interviewer gives you — they're trying to get you to the answer</li><li>Ask clarifying questions if genuinely needed — it's not a weakness</li><li>If you realise mid-solution you've gone wrong, say so: "Actually, I think I need to condition on X differently..."</li><li>End with a sanity check on every answer — it shows rigour</li></ul>` }
+  ],
+  practice:[
+    { source:'Final Review', title:'Lightning Round: Key Results',
+      q:'Without looking anything up, state: (a) E[geometric(p)], (b) E[max of two fair dice], (c) P(win Gambler\'s Ruin from k with total N, fair), (d) E[Coupon Collector, n coupons], (e) P(airplane seat 100 is in correct seat)',
+      hint:'These are the 5 results you must know cold. If any are uncertain, review immediately.',
+      solution:`<p>(a) E[geometric(p)] = <strong>1/p</strong></p>
+      <p>(b) E[max of two fair dice] = <strong>161/36 ≈ 4.47</strong></p>
+      <p>(c) P(win from k) = <strong>k/N</strong></p>
+      <p>(d) E[Coupon Collector] = <strong>n×(1 + 1/2 + ... + 1/n) ≈ n ln(n)</strong></p>
+      <p>(e) P(seat 100 correct) = <strong>1/2</strong></p>` },
+    { source:'Final Review', title:'Decision Framework Check',
+      q:'I offer you two options: (A) receive $7 guaranteed, or (B) roll two dice and receive the sum. Which do you choose and why?',
+      hint:'Calculate EV for both. Then analyse variance.',
+      solution:`<p>E[B] = E[sum of two dice] = 7 = E[A]. Equal EV.</p>
+      <p>Var[A] = 0. Var[B] = 35/6 ≈ 5.83.</p>
+      <p>For a risk-neutral agent: indifferent. For a risk-averse agent: prefer A (certainty). For a risk-seeking agent: prefer B.</p>
+      <p>In the context of a trading floor: risk neutrality is the baseline. Prefer B if you have many such opportunities (law of large numbers reduces variance over many plays). Prefer A if this is a one-shot bet with stakes that matter.</p>
+      <div class="insight-box">The "right" answer depends on risk preference and context. Saying this in the interview shows sophistication — but always compute the numbers first.</div>` },
+    { source:'Final', title:'One Last Hard One',
+      q:'You pick a random card from a shuffled standard deck, look at it, and put it back. You repeat until you\'ve seen ALL 52 different cards at least once. What is the expected number of draws? Express as a formula and approximate numerically.',
+      hint:'This is the Coupon Collector\'s problem with n=52.',
+      solution:`<p>E[draws] = 52 × (1 + 1/2 + 1/3 + ... + 1/52) = 52 × H(52)</p>
+      <span class="formula">H(52) ≈ ln(52) + 0.5772 ≈ 3.951 + 0.577 ≈ 4.528</span>
+      <span class="formula">E[draws] ≈ 52 × 4.528 ≈ 235.5 draws</span>
+      <p>Exact: 52×H(52) ≈ 235.98. So you'd expect to draw about 236 cards (with replacement) to see all 52 values.</p>
+      <div class="insight-box">235 draws to cover 52 cards — that feels surprisingly large. But the last few cards are hard to find: when you need just 1 specific card, E[extra draws] = 52. The harmonic series captures exactly how hard each marginal card becomes.</div>` }
+  ],
+  tests:[
+    { label:'EXTREME', cls:'diff-extreme', tag:'tt-extreme', category:'Secretary Problem',
+      q:'You interview n candidates one by one, in random order. After each interview you must immediately hire them or reject them forever. You want to maximise the probability of hiring the best candidate overall. Describe the optimal strategy. What is the probability of success as n → ∞?',
+      solution:`<p>Optimal Strategy (optimal stopping / secretary problem): Reject the first ⌊n/e⌋ ≈ 37% of candidates (the "observation phase"), then hire the first candidate better than all previously seen candidates.</p>
+      <p>More precisely: reject the first r−1 candidates, then hire the first who beats all of the first r−1.</p>
+      <p>Optimal threshold: r* ≈ n/e, giving maximum probability of success.</p>
+      <span class="formula">P(success | optimal strategy) = (r/n) × Σₖ₌ᵣⁿ 1/(k−1)</span>
+      <p>As n → ∞, with r = n/e:</p>
+      <span class="formula">P(success) → 1/e ≈ 36.8%</span>
+      <div class="key-insight">🔑 The secretary problem shows that you can guarantee ~37% success probability regardless of n — remarkable. The strategy generalises: always dedicate ~37% of your sample to "exploration" before "exploitation." This appears in hiring, online advertising, dating, and algorithm design (explore-exploit tradeoff).</div>` },
+    { label:'EXTREME', cls:'diff-extreme', tag:'tt-extreme', category:'Options + Probability',
+      q:'A stock is currently at $100. Each day it goes up by $1 with probability 0.55, or down by $1 with probability 0.45. You own a contract that pays $1 if the stock reaches $110 before it reaches $90 (starting from $100). What is the fair value of this contract (ignoring discounting)?',
+      solution:`<p>This is Gambler's Ruin with p=0.55, q=0.45. Let r = q/p = 0.45/0.55 = 9/11.</p>
+      <p>Starting at k=10 (distance from lower boundary 90), N=20 (distance from 90 to 110):</p>
+      <span class="formula">P(reach 110 before 90) = [1 − r^k] / [1 − r^N] = [1 − (9/11)^10] / [1 − (9/11)^20]</span>
+      <span class="formula">(9/11)^10 ≈ e^(10 × ln(9/11)) = e^(10 × (−0.2007)) = e^(−2.007) ≈ 0.1346</span>
+      <span class="formula">(9/11)^20 ≈ 0.1346² ≈ 0.0181</span>
+      <span class="formula">P ≈ (1 − 0.1346) / (1 − 0.0181) = 0.8654 / 0.9819 ≈ 0.881</span>
+      <p>Fair value ≈ <strong>$0.881</strong>.</p>
+      <div class="key-insight">🔑 Biased Gambler's Ruin is the foundation of barrier options pricing. The formula P = (1−r^k)/(1−r^N) where r=q/p is the key. If p=q=0.5, it reduces to k/N (fair game result).</div>` },
+    { label:'EXTREME', cls:'diff-extreme', tag:'tt-extreme', category:'Random Walk',
+      q:'You start a 1D random walk at position 0. At each step you move +1 or −1 with equal probability. (a) What is the probability you ever return to 0? (b) What is the expected number of steps to return to 0? (c) What does this tell you about 1D random walks?',
+      solution:`<p>(a) For 1D symmetric random walk: P(ever return to 0 | start at 0) = <strong>1</strong>. The walk is recurrent — it returns to 0 infinitely often with probability 1.</p>
+      <p>(b) E[return time to 0] = <strong>∞</strong>. Even though return is certain, the expected time is infinite. This is the phenomenon of "null recurrence."</p>
+      <p>Proof sketch: P(return to 0 in 2n steps) = C(2n,n)/4^n ~ 1/√(πn) by Stirling. The expected return time = Σ 2n × P(return exactly at 2n) diverges.</p>
+      <p>(c) 1D and 2D random walks are recurrent (return to origin with probability 1). 3D and higher are transient (positive probability of never returning). This is the "Pólya's theorem" — a drunk man will find his way home, but a drunk bird may be lost forever.</p>
+      <div class="key-insight">🔑 Recurrence vs transience of random walks is fundamental in probability theory, with deep connections to financial modelling (Brownian motion), physics (diffusion), and computer science (Markov chains). Knowing this result — and the surprising E[return time] = ∞ — will genuinely impress your interviewer.</div>` }
+  ]
+}
+];
+
+/* ═══════════════════════════════════════════════════
+   STATE (in-memory only)
+═══════════════════════════════════════════════════ */
+const STATE = {
+  currentDay: null,
+  // tasks[dayNum][taskIdx] = bool
+  tasks: {},
+  // concepts[dayNum][conceptIdx] = bool
+  concepts: {},
+  // practice[dayNum][probIdx] = bool
+  practice: {},
+  // tests[dayNum][testIdx] = bool
+  tests: {},
+  // revealed: track which hints/solutions shown
+  hintsShown: {},
+  solsShown: {},
+  testSolsShown: {}
+};
+DAYS.forEach(d => {
+  STATE.tasks[d.num] = new Array(d.tasks.length).fill(false);
+  STATE.concepts[d.num] = new Array(d.concepts.length).fill(false);
+  STATE.practice[d.num] = new Array(d.practice.length).fill(false);
+  STATE.tests[d.num] = new Array(d.tests.length).fill(false);
+});
+
+/* ═══════════════════════════════════════════════════
+   PROGRESS CALCULATION
+═══════════════════════════════════════════════════ */
+function calcProgress(dayNum) {
+  const d = DAYS.find(x => x.num === dayNum);
+  const t = STATE.tasks[dayNum].filter(Boolean).length;
+  const c = STATE.concepts[dayNum].filter(Boolean).length;
+  const p = STATE.practice[dayNum].filter(Boolean).length;
+  const ts = STATE.tests[dayNum].filter(Boolean).length;
+  const total = d.tasks.length + d.concepts.length + d.practice.length + d.tests.length;
+  const done = t + c + p + ts;
+  return { t, c, p, ts, total, done, pct: total > 0 ? Math.round((done/total)*100) : 0,
+    tTotal: d.tasks.length, cTotal: d.concepts.length, pTotal: d.practice.length, tsTotal: d.tests.length };
+}
+
+function totalOverallProgress() {
+  let totalDone = 0, totalAll = 0;
+  DAYS.forEach(d => {
+    const pr = calcProgress(d.num);
+    totalDone += pr.done; totalAll += pr.total;
+  });
+  return totalAll > 0 ? Math.round((totalDone/totalAll)*100) : 0;
+}
+
+/* ═══════════════════════════════════════════════════
+   HOME RENDER
+═══════════════════════════════════════════════════ */
+function renderHome() {
+  renderDaysGrid();
+  renderHomeAnswers();
+}
+
+function renderDaysGrid() {
+  const grid = document.getElementById('days-grid');
+  grid.innerHTML = '';
+  DAYS.forEach(d => {
+    const pr = calcProgress(d.num);
+    const dotCount = d.tasks.length;
+    const dotsDone = STATE.tasks[d.num].filter(Boolean).length;
+    const dots = Array.from({length: Math.min(dotCount, 6)}, (_, i) =>
+      `<div class="dp-dot${i < dotsDone ? ' done':''}"></div>`).join('');
+    const cls = d.isInterviewDay ? ' is-interview' : '';
+    const tasks = d.tasks.slice(0,4).map(t => `<li>${t.text.length>55?t.text.slice(0,55)+'…':t.text}</li>`).join('');
+    const badge = d.tasks[d.tasks.length-1]?.tag || '';
+    grid.innerHTML += `
+    <div class="day-card${cls}" style="animation-delay:${(d.num-1)*0.06}s" onclick="openDay(${d.num})">
+      <div class="dc-head">
+        <div class="dc-num">${d.num}</div>
+        <div class="dc-day">${d.name} · ${d.theme.split(' ').slice(0,2).join(' ')}</div>
+      </div>
+      <div class="dc-theme">${d.theme}</div>
+      <ul class="dc-tasks">${tasks}<li><span class="dc-badge">${badge}</span></li></ul>
+      <div class="dc-progress">${dots}
+        <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-left:auto">${pr.pct}%</span>
+      </div>
+    </div>`;
+  });
+}
+
+const HOME_ANSWERS = [
+  { num:'Ex1', q:'Draw 4 cards without replacement — P(one of each suit)?',
+    body:`<p>Favourable: choose one card from each of the 4 suits. Divide by total ways to draw 4 cards from 52.</p><span class="formula">P = (13⁴ × 4!) / (52×51×50×49) = 685,464 / 6,497,400 ≈ 10.55%</span><div class="insight-box">Intuition: about 1 in 10. Use combinations: C(13,1)⁴/C(52,4) gives the same result.</div>` },
+  { num:'Ex2', q:'Expected dice rolls to land on a 3?',
+    body:`<p>Geometric distribution, p=1/6.</p><span class="formula">E[X] = 1/p = 6 rolls</span><div class="insight-box">Memorise: E[geometric] = 1/p. Foundational result.</div>` },
+  { num:'Ex3', q:'52 draws with replacement — P(no Kings)?',
+    body:`<span class="formula">P = (48/52)^52 = (12/13)^52 ≈ e^(-4.15) ≈ 1.57%</span><div class="insight-box">Approximate: (1 − 1/n)^(4n) ≈ e^(-4) ≈ 1.83%. Quick mental estimate.</div>` },
+  { num:'Ex4', q:'Two dice: max value OR twice the minimum?',
+    body:`<span class="formula">E[max] = 161/36 ≈ 4.47</span><span class="formula">E[2×min] = 2×91/36 ≈ 5.06</span><p>Choose <strong>twice the minimum</strong>. Higher EV. Counterintuitive — always compute.</p>` },
+  { num:'Ex5', q:'Team A tournament — take the $20 bet?',
+    body:`<span class="formula">P(A wins) = (2/3)×[(1/2)(1/2)+(1/2)(1/4)] = 1/4</span><span class="formula">EV = 1/4×$100 − $20 = +$5</span><p>Yes, take the bet.</p>` },
+  { num:'Ex6', q:'39 balls (38 green, 1 red) — expected balls remaining?',
+    body:`<p>By symmetry, red ball is equally likely in any of positions 1–39. E[position]=20.</p><span class="formula">E[remaining] = 39 − 20 = 19 balls</span>` },
+  { num:'Ex11', q:'Double a single die vs sum of two dice — which is better?',
+    body:`<p>Both have <strong>E=7</strong>. But Var[2×die]≈11.67 vs Var[sum]≈5.83.</p><p>Choose <strong>sum of two dice</strong>: same EV, half the variance.</p><div class="insight-box">This question tests whether you think beyond EV. Always pivot to variance when EV is equal.</div>` }
+];
+
+function renderHomeAnswers() {
+  const strip = document.getElementById('home-answers-strip');
+  strip.innerHTML = HOME_ANSWERS.map((a,i) => `
+    <div class="ans-row">
+      <div class="ans-q" onclick="toggleAns(${i}, this)">
+        <div class="ans-qnum">${a.num}</div>
+        <div class="ans-qtext">${a.q}</div>
+        <div class="ans-toggle">+</div>
+      </div>
+      <div class="ans-body" id="ans-body-${i}">${a.body}</div>
+    </div>`).join('');
+}
+
+function toggleAns(i, el) {
+  const body = document.getElementById(`ans-body-${i}`);
+  const icon = el.querySelector('.ans-toggle');
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.ans-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.ans-toggle').forEach(x => x.textContent='+');
+  if (!isOpen) { body.classList.add('open'); icon.textContent='−'; }
+}
+
+/* ═══════════════════════════════════════════════════
+   DAY VIEW RENDER
+═══════════════════════════════════════════════════ */
+function openDay(num) {
+  STATE.currentDay = num;
+  const d = DAYS.find(x => x.num === num);
+  document.getElementById('home-view').style.display = 'none';
+  const dv = document.getElementById('day-view');
+  dv.style.display = 'block';
+  dv.classList.add('active');
+  document.getElementById('dv-title-bar').textContent = `Day ${num} — ${d.theme}`;
+  document.getElementById('dv-day-label').textContent = `Day ${num} of 7 · ${d.name.toUpperCase()}`;
+  document.getElementById('dv-label').textContent = `Day ${num} of 7`;
+  document.getElementById('dv-heading').innerHTML = d.theme.split(' ').length > 2
+    ? d.theme.replace(/(\w+\s+\w+)\s+(.+)/, '$1<br><em>$2</em>')
+    : `${d.theme}<br><em>Day ${num}</em>`;
+  document.getElementById('dv-subtitle').textContent = d.subtitle;
+
+  // Switch to checklist tab
+  switchTab('checklist', document.querySelector('.tab-btn[data-tab="checklist"]'));
+
+  renderChecklist(d);
+  renderConcepts(d);
+  renderPractice(d);
+  renderTests(d);
+  renderAnalytics(d);
+  updateStats(num);
+  window.scrollTo(0,0);
+}
+
+function goHome() {
+  document.getElementById('day-view').style.display = 'none';
+  document.getElementById('day-view').classList.remove('active');
+  document.getElementById('home-view').style.display = 'block';
+  renderDaysGrid(); // refresh progress dots
+  window.scrollTo(0,0);
+}
+
+function switchTab(tabName, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.getElementById(`panel-${tabName}`).classList.add('active');
+}
+
+/* ── Checklist ── */
+function renderChecklist(d) {
+  const panel = document.getElementById('panel-checklist');
+  panel.innerHTML = `<div class="checklist">${d.tasks.map((t,i) => `
+    <div class="check-item${STATE.tasks[d.num][i]?' checked':''}" id="ci-${d.num}-${i}" onclick="toggleTask(${d.num},${i})">
+      <div class="check-box">${STATE.tasks[d.num][i]?'✓':''}</div>
+      <div class="ci-text">${t.text}</div>
+      <div class="ci-tag">${t.tag}</div>
+    </div>`).join('')}
+  </div>`;
+}
+
+function toggleTask(dayNum, idx) {
+  STATE.tasks[dayNum][idx] = !STATE.tasks[dayNum][idx];
+  const item = document.getElementById(`ci-${dayNum}-${idx}`);
+  item.classList.toggle('checked', STATE.tasks[dayNum][idx]);
+  item.querySelector('.check-box').textContent = STATE.tasks[dayNum][idx] ? '✓' : '';
+  updateStats(dayNum);
+}
+
+/* ── Concepts ── */
+function renderConcepts(d) {
+  const panel = document.getElementById('panel-concepts');
+  panel.innerHTML = `<div class="concepts-list">${d.concepts.map((c,i) => `
+    <div class="concept-card" id="cc-${d.num}-${i}">
+      <div class="concept-head" onclick="toggleConcept(${d.num},${i})">
+        <div class="concept-icon">${c.icon}</div>
+        <div class="concept-title">${c.title}</div>
+        <div class="concept-difficulty ${c.diff}">${c.diffLabel}</div>
+        <div class="concept-toggle" id="ct-${d.num}-${i}">+</div>
+      </div>
+      <div class="concept-body" id="cb-${d.num}-${i}">
+        ${c.body}
+        <div style="clear:both; margin-top:16px; display:flex; justify-content:flex-end;">
+          <button class="master-btn${STATE.concepts[d.num][i]?' mastered':''}" id="mb-${d.num}-${i}"
+            onclick="toggleMastered(${d.num},${i});event.stopPropagation()">
+            ${STATE.concepts[d.num][i]?'✓ Mastered':'Mark as Mastered'}
+          </button>
+        </div>
+      </div>
+    </div>`).join('')}
+  </div>`;
+}
+
+function toggleConcept(dayNum, idx) {
+  const body = document.getElementById(`cb-${dayNum}-${idx}`);
+  const toggle = document.getElementById(`ct-${dayNum}-${idx}`);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  toggle.textContent = isOpen ? '+' : '−';
+}
+
+function toggleMastered(dayNum, idx) {
+  STATE.concepts[dayNum][idx] = !STATE.concepts[dayNum][idx];
+  const btn = document.getElementById(`mb-${dayNum}-${idx}`);
+  btn.classList.toggle('mastered', STATE.concepts[dayNum][idx]);
+  btn.textContent = STATE.concepts[dayNum][idx] ? '✓ Mastered' : 'Mark as Mastered';
+  updateStats(dayNum);
+}
+
+/* ── Practice ── */
+function renderPractice(d) {
+  const panel = document.getElementById('panel-practice');
+  panel.innerHTML = `<div class="problems-list">${d.practice.map((p,i) => `
+    <div class="problem-card">
+      <div class="prob-header">
+        <div class="prob-num">${i+1}</div>
+        <div class="prob-content">
+          <div class="prob-title">${p.source} · ${p.title}</div>
+          <div class="prob-q">${p.q}</div>
+          <div class="prob-actions">
+            <button class="prob-btn hint-btn" onclick="toggleHint(${d.num},${i})">💡 Hint</button>
+            <button class="prob-btn sol-btn" onclick="toggleSol(${d.num},${i})">📖 Solution</button>
+            <button class="prob-btn${STATE.practice[d.num][i]?' solved-btn':''}" id="pb-${d.num}-${i}"
+              onclick="toggleSolved(${d.num},${i})">
+              ${STATE.practice[d.num][i]?'✓ Solved':'Mark Solved'}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="prob-hint" id="ph-${d.num}-${i}">
+        <div class="prob-hint-inner">💡 ${p.hint}</div>
+      </div>
+      <div class="prob-solution" id="ps-${d.num}-${i}">${p.solution}</div>
+    </div>`).join('')}
+  </div>`;
+}
+
+function toggleHint(dayNum, idx) {
+  const el = document.getElementById(`ph-${dayNum}-${idx}`);
+  el.classList.toggle('show');
+}
+function toggleSol(dayNum, idx) {
+  const el = document.getElementById(`ps-${dayNum}-${idx}`);
+  el.classList.toggle('show');
+}
+function toggleSolved(dayNum, idx) {
+  STATE.practice[dayNum][idx] = !STATE.practice[dayNum][idx];
+  const btn = document.getElementById(`pb-${dayNum}-${idx}`);
+  btn.classList.toggle('solved-btn', STATE.practice[dayNum][idx]);
+  btn.textContent = STATE.practice[dayNum][idx] ? '✓ Solved' : 'Mark Solved';
+  updateStats(dayNum);
+}
+
+/* ── Tests ── */
+function renderTests(d) {
+  const panel = document.getElementById('panel-test');
+  panel.innerHTML = `
+    <div class="test-intro">
+      <div class="test-intro-icon">🔥</div>
+      <div class="test-intro-text">
+        <h3>Boss-Level Questions</h3>
+        <p>These are maximum difficulty. Attempt each for 5–10 minutes before revealing the solution. If you can crack these, you're ready for anything Optiver throws at you.</p>
+      </div>
+    </div>
+    <div class="test-list">${d.tests.map((t,i) => `
+      <div class="test-card ${t.cls}">
+        <div class="test-head">
+          <div class="test-tag ${t.tag}">${t.label}</div>
+          <div class="test-q-content">
+            <div class="test-q-label">${t.category}</div>
+            <div class="test-q-text">${t.q}</div>
+          </div>
+        </div>
+        <div class="test-actions">
+          <button class="reveal-btn" onclick="toggleTestSol(${d.num},${i})">🔓 Reveal Solution</button>
+          <button class="correct-btn${STATE.tests[d.num][i]?' got-it':''}" id="tb-${d.num}-${i}"
+            onclick="toggleTestPassed(${d.num},${i})">
+            ${STATE.tests[d.num][i]?'✓ Got it!':'I got it'}
+          </button>
+        </div>
+        <div class="test-solution" id="ts-${d.num}-${i}">${t.solution}</div>
+      </div>`).join('')}
+    </div>`;
+}
+
+function toggleTestSol(dayNum, idx) {
+  const el = document.getElementById(`ts-${dayNum}-${idx}`);
+  el.classList.toggle('open');
+}
+function toggleTestPassed(dayNum, idx) {
+  STATE.tests[dayNum][idx] = !STATE.tests[dayNum][idx];
+  const btn = document.getElementById(`tb-${dayNum}-${idx}`);
+  btn.classList.toggle('got-it', STATE.tests[dayNum][idx]);
+  btn.textContent = STATE.tests[dayNum][idx] ? '✓ Got it!' : 'I got it';
+  updateStats(dayNum);
+}
+
+/* ── Analytics ── */
+function renderAnalytics(d) {
+  const pr = calcProgress(d.num);
+  const panel = document.getElementById('panel-analytics');
+  const bars = [
+    { label:'Tasks', done: pr.t, total: pr.tTotal, color:'var(--blue)' },
+    { label:'Concepts', done: pr.c, total: pr.cTotal, color:'var(--purple)' },
+    { label:'Practice', done: pr.p, total: pr.pTotal, color:'var(--gold)' },
+    { label:'Boss Qs', done: pr.ts, total: pr.tsTotal, color:'var(--red)' },
+  ];
+  const weekBars = DAYS.map(day => {
+    const wpr = calcProgress(day.num);
+    return `<div class="bar-row">
+      <div class="bar-label">Day ${day.num}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${wpr.pct}%;background:${day.num===d.num?'var(--gold)':'var(--border2)'}"></div></div>
+      <div class="bar-val">${wpr.pct}%</div>
+    </div>`;
+  }).join('');
+
+  panel.innerHTML = `
+    <div class="analytics-wrap">
+      <div class="analytics-card">
+        <h3 class="label">Today's Breakdown</h3>
+        <div class="bar-chart">${bars.map(b => `
+          <div class="bar-row">
+            <div class="bar-label">${b.label}</div>
+            <div class="bar-track"><div class="bar-fill" style="width:${b.total>0?Math.round(b.done/b.total*100):0}%;background:${b.color}"></div></div>
+            <div class="bar-val">${b.done}/${b.total}</div>
+          </div>`).join('')}
+        </div>
+      </div>
+      <div class="analytics-card">
+        <h3 class="label">Overall Week Progress</h3>
+        <div class="bar-chart">${weekBars}</div>
+      </div>
+    </div>
+    <div class="analytics-card" style="margin-top:0">
+      <h3 class="label" style="margin-bottom:12px">Session Notes</h3>
+      <div class="session-log">
+        <div class="log-entry"><div class="log-dot" style="background:var(--blue)"></div><div class="log-text">Tasks completed: ${pr.t}/${pr.tTotal}</div><div class="log-time">${pr.t===pr.tTotal?'✓ Done':'In progress'}</div></div>
+        <div class="log-entry"><div class="log-dot" style="background:var(--purple)"></div><div class="log-text">Concepts mastered: ${pr.c}/${pr.cTotal}</div><div class="log-time">${pr.c===pr.cTotal?'✓ Done':'In progress'}</div></div>
+        <div class="log-entry"><div class="log-dot" style="background:var(--gold)"></div><div class="log-text">Practice problems solved: ${pr.p}/${pr.pTotal}</div><div class="log-time">${pr.p===pr.pTotal?'✓ Done':'In progress'}</div></div>
+        <div class="log-entry"><div class="log-dot" style="background:var(--red)"></div><div class="log-text">Boss questions passed: ${pr.ts}/${pr.tsTotal}</div><div class="log-time">${pr.ts===pr.tsTotal?'✓ Done':'In progress'}</div></div>
+        <div class="log-entry" style="margin-top:4px"><div class="log-dot" style="background:var(--green)"></div><div class="log-text"><strong>Overall week: ${totalOverallProgress()}% complete</strong></div><div class="log-time" style="color:var(--green)">${totalOverallProgress()===100?'🏆 All done!':''}</div></div>
+      </div>
+    </div>`;
+}
+
+/* ── Stats update ── */
+function updateStats(dayNum) {
+  const d = DAYS.find(x => x.num === dayNum);
+  const pr = calcProgress(dayNum);
+
+  // Ring
+  const pct = pr.pct;
+  const circ = 2 * Math.PI * 50;
+  const offset = circ * (1 - pct/100);
+  const ring = document.getElementById('ring-fill');
+  const ringPct = document.getElementById('ring-pct');
+  if (ring) { ring.style.strokeDashoffset = offset; }
+  if (ringPct) { ringPct.textContent = pct+'%'; }
+
+  // Stats boxes
+  const st = document.getElementById('stat-tasks');
+  const sc = document.getElementById('stat-concepts');
+  const sp = document.getElementById('stat-practice');
+  const sts = document.getElementById('stat-tests');
+  if (st) st.textContent = `${pr.t}/${pr.tTotal}`;
+  if (sc) sc.textContent = `${pr.c}/${pr.cTotal}`;
+  if (sp) sp.textContent = `${pr.p}/${pr.pTotal}`;
+  if (sts) sts.textContent = `${pr.ts}/${pr.tsTotal}`;
+
+  // Tab counts
+  const tc1 = document.getElementById('tc-checklist');
+  const tc2 = document.getElementById('tc-concepts');
+  const tc3 = document.getElementById('tc-practice');
+  const tc4 = document.getElementById('tc-test');
+  if (tc1) { tc1.textContent=pr.t; tc1.classList.toggle('done-count', pr.t===pr.tTotal); }
+  if (tc2) { tc2.textContent=pr.c; tc2.classList.toggle('done-count', pr.c===pr.cTotal); }
+  if (tc3) { tc3.textContent=pr.p; tc3.classList.toggle('done-count', pr.p===pr.pTotal); }
+  if (tc4) { tc4.textContent=pr.ts; tc4.classList.toggle('done-count', pr.ts===pr.tsTotal); }
+
+  // Re-render analytics if open
+  const analyticsPanel = document.getElementById('panel-analytics');
+  if (analyticsPanel && analyticsPanel.classList.contains('active')) {
+    renderAnalytics(d);
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════ */
+renderHome();
+</script>
+</body>
+</html>
